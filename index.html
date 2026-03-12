@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Punto Zero</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+
+</head>
+<body>
+
+<nav>
+  <div class="logo">Punto <span>Zero</span></div>
+  <ul class="nav-links">
+    <li><a onclick="showPage('home')" id="nav-home" class="active">Inicio</a></li>
+    <li><a onclick="showPage('services')" id="nav-services">Servicios</a></li>
+    <li><a onclick="showPage('team')" id="nav-team">Equipo</a></li>
+    <li><a onclick="showPage('admin')" id="nav-admin">Admin</a></li>
+  </ul>
+  <button class="nav-cta" onclick="showPage('booking'); resetBooking();">Reservar cita</button>
+</nav>
+
+<!-- HOME -->
+<div class="page active" id="page-home">
+  <div class="hero">
+    <div class="hero-left">
+      <p class="hero-tag">Peluquería · Madrid · Desde 2018</p>
+      <h1 class="hero-title">El arte <em>de tu</em><br>mejor versión</h1>
+      <p class="hero-desc">Reserva tu cita en segundos. Elige tu estilista, servicio y horario. Sin llamadas, sin esperas.</p>
+      <div class="hero-btns">
+        <button class="btn-primary" onclick="showPage('booking'); resetBooking();">Reservar ahora</button>
+        <button class="btn-ghost" onclick="showPage('services')">Ver servicios</button>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-stat">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;">
+          <div>
+            <div class="hero-stat-num">4.9</div>
+            <div class="hero-stat-label">Valoración media</div>
+          </div>
+          <div>
+            <div class="hero-stat-num">+800</div>
+            <div class="hero-stat-label">Clientes satisfechos</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<div class="page" id="page-services">
+  <div class="section">
+    <div class="section-header">
+      <h2 class="section-title">Nuestros <em>servicios</em></h2>
+      <span class="section-tag">06 tratamientos</span>
+    </div>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-num">01</div>
+        <div class="service-name">Corte & Estilo</div>
+        <div class="service-desc">Corte personalizado adaptado a tu rostro y estilo de vida. Incluye lavado y secado.</div>
+        <div class="service-footer">
+          <div class="service-price">35€</div>
+          <div class="service-duration">45 min</div>
+        </div>
+      </div>
+      <div class="service-card">
+        <div class="service-num">02</div>
+        <div class="service-name">Color Completo</div>
+        <div class="service-desc">Coloración de raíz a puntas con productos de alta gama libres de amoniaco.</div>
+        <div class="service-footer">
+          <div class="service-price">65€</div>
+          <div class="service-duration">90 min</div>
+        </div>
+      </div>
+      <div class="service-card">
+        <div class="service-num">03</div>
+        <div class="service-name">Mechas & Balayage</div>
+        <div class="service-desc">Técnica artesanal para un efecto natural y luminoso. Personalizado según tu base.</div>
+        <div class="service-footer">
+          <div class="service-price">90€</div>
+          <div class="service-duration">120 min</div>
+        </div>
+      </div>
+      <div class="service-card">
+        <div class="service-num">04</div>
+        <div class="service-name">Tratamiento Keratina</div>
+        <div class="service-desc">Alisado nutritivo de larga duración. Elimina el frizz y aporta brillo intenso.</div>
+        <div class="service-footer">
+          <div class="service-price">110€</div>
+          <div class="service-duration">150 min</div>
+        </div>
+      </div>
+      <div class="service-card">
+        <div class="service-num">05</div>
+        <div class="service-name">Peinado & Recogido</div>
+        <div class="service-desc">Para eventos especiales, bodas o cualquier ocasión que merezca un look extraordinario.</div>
+        <div class="service-footer">
+          <div class="service-price">45€</div>
+          <div class="service-duration">60 min</div>
+        </div>
+      </div>
+      <div class="service-card">
+        <div class="service-num">06</div>
+        <div class="service-name">Hidratación Profunda</div>
+        <div class="service-desc">Mascarilla nutritiva y ritual de cuidado capilar para restaurar la vitalidad del cabello.</div>
+        <div class="service-footer">
+          <div class="service-price">40€</div>
+          <div class="service-duration">45 min</div>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:48px;">
+      <button class="btn-primary" onclick="showPage('booking'); resetBooking();">Reservar una cita</button>
+    </div>
+  </div>
+</div>
+
+<!-- TEAM -->
+<div class="page" id="page-team">
+  <div class="section">
+    <div class="section-header">
+      <h2 class="section-title">Nuestro <em>equipo</em></h2>
+      <span class="section-tag">4 estilistas</span>
+    </div>
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="team-avatar" style="background:#1a1a1a;">
+          <div class="team-avatar-initials" style="color:rgba(255,255,255,0.08);">LA</div>
+          <div class="team-avatar-label">
+            <div class="team-specialty">Color · Balayage</div>
+          </div>
+        </div>
+        <div class="team-name">Laura Alonso</div>
+        <div class="team-role">Directora & Colorista Senior</div>
+        <div class="team-rating"><span class="stars">★★★★★</span> 4.9 · 312 reseñas</div>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar" style="background:#111;">
+          <div class="team-avatar-initials" style="color:rgba(255,255,255,0.08);">MS</div>
+          <div class="team-avatar-label">
+            <div class="team-specialty">Corte · Peinado</div>
+          </div>
+        </div>
+        <div class="team-name">Marcos Soto</div>
+        <div class="team-role">Estilista Senior</div>
+        <div class="team-rating"><span class="stars">★★★★★</span> 4.8 · 245 reseñas</div>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar" style="background:#161616;">
+          <div class="team-avatar-initials" style="color:rgba(255,255,255,0.08);">CG</div>
+          <div class="team-avatar-label">
+            <div class="team-specialty">Keratina · Hidratación</div>
+          </div>
+        </div>
+        <div class="team-name">Carla García</div>
+        <div class="team-role">Especialista en Tratamientos</div>
+        <div class="team-rating"><span class="stars">★★★★★</span> 4.9 · 198 reseñas</div>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar" style="background:#0d0d0d;">
+          <div class="team-avatar-initials" style="color:rgba(255,255,255,0.08);">DR</div>
+          <div class="team-avatar-label">
+            <div class="team-specialty">Mechas · Color</div>
+          </div>
+        </div>
+        <div class="team-name">Diego Reyes</div>
+        <div class="team-role">Colorista & Estilista</div>
+        <div class="team-rating"><span class="stars">★★★★☆</span> 4.7 · 156 reseñas</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- BOOKING -->
+<div class="page" id="page-booking">
+  <div class="section">
+    <div class="section-header">
+      <h2 class="section-title">Reservar <em>cita</em></h2>
+      <span class="section-tag">3 pasos</span>
+    </div>
+
+    <div id="booking-flow">
+      <div class="booking-layout">
+        <div>
+          <div class="booking-steps">
+            <div class="step active" id="step-tab-1" onclick="goToStep(1)"><span class="step-num">1</span>Servicio</div>
+            <div class="step" id="step-tab-2" onclick="goToStep(2)"><span class="step-num">2</span>Estilista</div>
+            <div class="step" id="step-tab-3" onclick="goToStep(3)"><span class="step-num">3</span>Fecha & Hora</div>
+          </div>
+
+          <!-- Step 1 -->
+          <div class="booking-step-content active" id="bstep-1">
+            <h3 style="font-family:'Playfair Display',serif;font-size:22px;margin-bottom:24px;font-weight:700;">¿Qué servicio necesitas?</h3>
+            <div class="service-select-list">
+              <div class="service-select-item" onclick="selectService('Corte & Estilo', 35, 45)" id="srv-0">
+                <div><div class="ssi-name">Corte & Estilo</div><div style="font-size:12px;color:#888;margin-top:4px;font-weight:300;">Lavado + corte + secado</div></div>
+                <div><div class="ssi-price">35€</div><div class="ssi-duration">45 min</div></div>
+              </div>
+              <div class="service-select-item" onclick="selectService('Color Completo', 65, 90)" id="srv-1">
+                <div><div class="ssi-name">Color Completo</div><div style="font-size:12px;color:#888;margin-top:4px;font-weight:300;">Coloración raíz a puntas</div></div>
+                <div><div class="ssi-price">65€</div><div class="ssi-duration">90 min</div></div>
+              </div>
+              <div class="service-select-item" onclick="selectService('Mechas & Balayage', 90, 120)" id="srv-2">
+                <div><div class="ssi-name">Mechas & Balayage</div><div style="font-size:12px;color:#888;margin-top:4px;font-weight:300;">Técnica artesanal</div></div>
+                <div><div class="ssi-price">90€</div><div class="ssi-duration">120 min</div></div>
+              </div>
+              <div class="service-select-item" onclick="selectService('Tratamiento Keratina', 110, 150)" id="srv-3">
+                <div><div class="ssi-name">Tratamiento Keratina</div><div style="font-size:12px;color:#888;margin-top:4px;font-weight:300;">Alisado nutritivo</div></div>
+                <div><div class="ssi-price">110€</div><div class="ssi-duration">150 min</div></div>
+              </div>
+              <div class="service-select-item" onclick="selectService('Peinado & Recogido', 45, 60)" id="srv-4">
+                <div><div class="ssi-name">Peinado & Recogido</div><div style="font-size:12px;color:#888;margin-top:4px;font-weight:300;">Para eventos especiales</div></div>
+                <div><div class="ssi-price">45€</div><div class="ssi-duration">60 min</div></div>
+              </div>
+              <div class="service-select-item" onclick="selectService('Hidratación Profunda', 40, 45)" id="srv-5">
+                <div><div class="ssi-name">Hidratación Profunda</div><div style="font-size:12px;color:#888;margin-top:4px;font-weight:300;">Mascarilla nutritiva</div></div>
+                <div><div class="ssi-price">40€</div><div class="ssi-duration">45 min</div></div>
+              </div>
+            </div>
+            <div class="step-nav">
+              <button class="btn-primary" onclick="nextStep(2)" id="btn-next-1" disabled style="opacity:0.3;cursor:default;">Continuar →</button>
+            </div>
+          </div>
+
+          <!-- Step 2 -->
+          <div class="booking-step-content" id="bstep-2">
+            <h3 style="font-family:'Playfair Display',serif;font-size:22px;margin-bottom:24px;font-weight:700;">¿Con quién quieres ir?</h3>
+            <div class="stylist-select-grid">
+              <div class="stylist-card" onclick="selectStylist('Laura Alonso', 'Colorista Senior')" id="styl-0">
+                <div class="sc-avatar">LA</div>
+                <div><div class="sc-name">Laura Alonso</div><div class="sc-role">Colorista Senior</div><div style="font-size:11px;color:#888;margin-top:6px;">★★★★★ 4.9</div></div>
+              </div>
+              <div class="stylist-card" onclick="selectStylist('Marcos Soto', 'Estilista Senior')" id="styl-1">
+                <div class="sc-avatar">MS</div>
+                <div><div class="sc-name">Marcos Soto</div><div class="sc-role">Estilista Senior</div><div style="font-size:11px;color:#888;margin-top:6px;">★★★★★ 4.8</div></div>
+              </div>
+              <div class="stylist-card" onclick="selectStylist('Carla García', 'Tratamientos')" id="styl-2">
+                <div class="sc-avatar">CG</div>
+                <div><div class="sc-name">Carla García</div><div class="sc-role">Tratamientos</div><div style="font-size:11px;color:#888;margin-top:6px;">★★★★★ 4.9</div></div>
+              </div>
+              <div class="stylist-card" onclick="selectStylist('Diego Reyes', 'Colorista')" id="styl-3">
+                <div class="sc-avatar">DR</div>
+                <div><div class="sc-name">Diego Reyes</div><div class="sc-role">Colorista</div><div style="font-size:11px;color:#888;margin-top:6px;">★★★★☆ 4.7</div></div>
+              </div>
+            </div>
+            <div style="margin-top:16px;">
+              <div class="stylist-card" onclick="selectStylist('Sin preferencia', 'Cualquier estilista disponible')" id="styl-4" style="grid-column:span 2;">
+                <div class="sc-avatar" style="background:#f0f0eb;">✦</div>
+                <div><div class="sc-name">Sin preferencia</div><div class="sc-role">Cualquier estilista disponible</div></div>
+              </div>
+            </div>
+            <div class="step-nav">
+              <button class="btn-ghost" onclick="goToStep(1)">← Atrás</button>
+              <button class="btn-primary" onclick="nextStep(3)" id="btn-next-2" disabled style="opacity:0.3;cursor:default;">Continuar →</button>
+            </div>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="booking-step-content" id="bstep-3">
+            <h3 style="font-family:'Playfair Display',serif;font-size:22px;margin-bottom:24px;font-weight:700;">Elige fecha y hora</h3>
+            <div class="calendar">
+              <div class="cal-header">
+                <button class="cal-nav" onclick="prevMonth()">‹</button>
+                <div class="cal-month" id="cal-month-label"></div>
+                <button class="cal-nav" onclick="nextMonth()">›</button>
+              </div>
+              <div class="cal-grid" id="cal-grid"></div>
+            </div>
+            <div id="time-section" style="display:none;margin-top:32px;">
+              <h4 style="font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:#888;font-weight:500;margin-bottom:16px;">Horarios disponibles</h4>
+              <div class="time-slots" id="time-slots"></div>
+            </div>
+            <div class="step-nav" style="margin-top:32px;">
+              <button class="btn-ghost" onclick="goToStep(2)">← Atrás</button>
+              <button class="btn-primary" onclick="confirmBooking()" id="btn-confirm" disabled style="opacity:0.3;cursor:default;">Confirmar reserva</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Summary sidebar -->
+        <div class="booking-summary">
+          <div class="bs-title">Resumen de cita</div>
+          <div class="bs-item">
+            <span class="bs-label">Servicio</span>
+            <span class="bs-value empty" id="bs-service">No seleccionado</span>
+          </div>
+          <div class="bs-item">
+            <span class="bs-label">Estilista</span>
+            <span class="bs-value empty" id="bs-stylist">No seleccionado</span>
+          </div>
+          <div class="bs-item">
+            <span class="bs-label">Fecha</span>
+            <span class="bs-value empty" id="bs-date">No seleccionada</span>
+          </div>
+          <div class="bs-item">
+            <span class="bs-label">Hora</span>
+            <span class="bs-value empty" id="bs-time">No seleccionada</span>
+          </div>
+          <div class="bs-item">
+            <span class="bs-label">Duración</span>
+            <span class="bs-value empty" id="bs-duration">—</span>
+          </div>
+          <div class="bs-total">
+            <span class="bs-total-label">Total</span>
+            <span class="bs-total-price" id="bs-price">—</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Confirmation -->
+    <div id="booking-confirmation" style="display:none;">
+      <div class="confirmation">
+        <div class="confirm-check">✓</div>
+        <h2 class="confirm-title">¡Cita <em>confirmada</em>!</h2>
+        <p class="confirm-desc">Tu reserva ha sido registrada correctamente. Recibirás un recordatorio 24h antes de tu cita.</p>
+        <div class="confirm-details">
+          <div class="confirm-detail-row">
+            <span class="confirm-detail-label">Servicio</span>
+            <span class="confirm-detail-value" id="cf-service">—</span>
+          </div>
+          <div class="confirm-detail-row">
+            <span class="confirm-detail-label">Estilista</span>
+            <span class="confirm-detail-value" id="cf-stylist">—</span>
+          </div>
+          <div class="confirm-detail-row">
+            <span class="confirm-detail-label">Fecha</span>
+            <span class="confirm-detail-value" id="cf-date">—</span>
+          </div>
+          <div class="confirm-detail-row">
+            <span class="confirm-detail-label">Hora</span>
+            <span class="confirm-detail-value" id="cf-time">—</span>
+          </div>
+          <div class="confirm-detail-row">
+            <span class="confirm-detail-label">Total</span>
+            <span class="confirm-detail-value" id="cf-price">—</span>
+          </div>
+        </div>
+        <button class="btn-primary" onclick="showPage('home')">Volver al inicio</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN -->
+<div class="page" id="page-admin">
+  <div class="admin-layout">
+    <div class="admin-sidebar">
+      <div class="admin-sidebar-title">Panel de Control</div>
+      <div class="admin-nav-item active" onclick="showAdminSection('dashboard', this)"><span class="admin-nav-icon">◈</span> Dashboard</div>
+      <div class="admin-nav-item" onclick="showAdminSection('citas', this)"><span class="admin-nav-icon">◷</span> Citas</div>
+      <div class="admin-nav-item" onclick="showAdminSection('equipo', this)"><span class="admin-nav-icon">◇</span> Equipo</div>
+      <div class="admin-nav-item" onclick="showAdminSection('servicios', this)"><span class="admin-nav-icon">◈</span> Servicios</div>
+    </div>
+
+    <div class="admin-content">
+
+      <!-- Dashboard -->
+      <div class="admin-section active" id="admin-dashboard">
+        <div class="admin-header">
+          <div class="admin-title">Dashboard</div>
+          <div class="admin-subtitle">Lunes, 3 de marzo de 2025</div>
+        </div>
+        <div class="stats-row">
+          <div class="stat-card">
+            <div class="stat-card-label">Citas hoy</div>
+            <div class="stat-card-value">8</div>
+            <div class="stat-card-change up">↑ 2 más que ayer</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-label">Ingresos mes</div>
+            <div class="stat-card-value">3.240€</div>
+            <div class="stat-card-change up">↑ 12% vs mes anterior</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-label">Clientes nuevos</div>
+            <div class="stat-card-value">24</div>
+            <div class="stat-card-change up">↑ este mes</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-label">Valoración media</div>
+            <div class="stat-card-value">4.9</div>
+            <div class="stat-card-change">★ últimos 30 días</div>
+          </div>
+        </div>
+        <div class="admin-table-wrap">
+          <div class="admin-table-header">
+            <div class="admin-table-title">Próximas citas — hoy</div>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>Hora</th>
+                <th>Cliente</th>
+                <th>Servicio</th>
+                <th>Estilista</th>
+                <th>Total</th>
+                <th>Estado</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>10:00</td><td>Ana Martínez</td><td>Corte & Estilo</td><td>Laura Alonso</td><td>35€</td><td><span class="badge badge-confirmed">Confirmada</span></td></tr>
+              <tr><td>10:30</td><td>Sofía López</td><td>Mechas & Balayage</td><td>Marcos Soto</td><td>90€</td><td><span class="badge badge-confirmed">Confirmada</span></td></tr>
+              <tr><td>11:30</td><td>Elena Ruiz</td><td>Color Completo</td><td>Carla García</td><td>65€</td><td><span class="badge badge-pending">Pendiente</span></td></tr>
+              <tr><td>12:00</td><td>Lucía Fernández</td><td>Hidratación Profunda</td><td>Diego Reyes</td><td>40€</td><td><span class="badge badge-confirmed">Confirmada</span></td></tr>
+              <tr><td>13:00</td><td>Carmen Gómez</td><td>Keratina</td><td>Laura Alonso</td><td>110€</td><td><span class="badge badge-confirmed">Confirmada</span></td></tr>
+              <tr><td>16:00</td><td>María Sánchez</td><td>Peinado & Recogido</td><td>Marcos Soto</td><td>45€</td><td><span class="badge badge-pending">Pendiente</span></td></tr>
+              <tr><td>17:00</td><td>Rosa Jiménez</td><td>Corte & Estilo</td><td>Diego Reyes</td><td>35€</td><td><span class="badge badge-cancelled">Cancelada</span></td></tr>
+              <tr><td>18:30</td><td>Paula Torres</td><td>Color Completo</td><td>Carla García</td><td>65€</td><td><span class="badge badge-confirmed">Confirmada</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Citas -->
+      <div class="admin-section" id="admin-citas">
+        <div class="admin-header">
+          <div class="admin-title">Todas las citas</div>
+          <div class="admin-subtitle">Gestiona y supervisa todas las reservas</div>
+        </div>
+        <div class="admin-table-wrap">
+          <div class="admin-table-header">
+            <div class="admin-table-title">Citas recientes</div>
+            <button class="btn-primary" style="font-size:12px;padding:10px 20px;">+ Nueva cita</button>
+          </div>
+          <table>
+            <thead>
+              <tr><th>Fecha</th><th>Hora</th><th>Cliente</th><th>Servicio</th><th>Estilista</th><th>Total</th><th>Estado</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>03/03</td><td>10:00</td><td>Ana Martínez</td><td>Corte & Estilo</td><td>Laura Alonso</td><td>35€</td><td><span class="badge badge-confirmed">Confirmada</span></td></tr>
+              <tr><td>03/03</td><td>10:30</td><td>Sofía López</td><td>Mechas & Balayage</td><td>Marcos Soto</td><td>90€</td><td><span class="badge badge-confirmed">Confirmada</span></td></tr>
+              <tr><td>02/03</td><td>11:00</td><td>Isabel Díaz</td><td>Color Completo</td><td>Carla García</td><td>65€</td><td><span class="badge badge-confirmed">Confirmada</span></td></tr>
+              <tr><td>02/03</td><td>12:30</td><td>Nuria Castro</td><td>Keratina</td><td>Laura Alonso</td><td>110€</td><td><span class="badge badge-confirmed">Confirmada</span></td></tr>
+              <tr><td>01/03</td><td>10:00</td><td>Teresa Vega</td><td>Corte & Estilo</td><td>Diego Reyes</td><td>35€</td><td><span class="badge badge-cancelled">Cancelada</span></td></tr>
+              <tr><td>28/02</td><td>16:00</td><td>Marta Blanco</td><td>Peinado</td><td>Marcos Soto</td><td>45€</td><td><span class="badge badge-confirmed">Confirmada</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Equipo -->
+      <div class="admin-section" id="admin-equipo">
+        <div class="admin-header">
+          <div class="admin-title">Equipo</div>
+          <div class="admin-subtitle">Gestión de estilistas</div>
+        </div>
+        <div class="admin-table-wrap">
+          <div class="admin-table-header">
+            <div class="admin-table-title">Estilistas</div>
+            <button class="btn-primary" style="font-size:12px;padding:10px 20px;">+ Añadir</button>
+          </div>
+          <table>
+            <thead><tr><th>Nombre</th><th>Especialidad</th><th>Citas este mes</th><th>Valoración</th><th>Ingresos mes</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Laura Alonso</strong></td><td>Colorista Senior</td><td>42</td><td>★★★★★ 4.9</td><td>1.240€</td></tr>
+              <tr><td><strong>Marcos Soto</strong></td><td>Estilista Senior</td><td>38</td><td>★★★★★ 4.8</td><td>980€</td></tr>
+              <tr><td><strong>Carla García</strong></td><td>Tratamientos</td><td>35</td><td>★★★★★ 4.9</td><td>870€</td></tr>
+              <tr><td><strong>Diego Reyes</strong></td><td>Colorista</td><td>29</td><td>★★★★☆ 4.7</td><td>740€</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Servicios -->
+      <div class="admin-section" id="admin-servicios">
+        <div class="admin-header">
+          <div class="admin-title">Servicios</div>
+          <div class="admin-subtitle">Gestión de precios y duración</div>
+        </div>
+        <div class="admin-table-wrap">
+          <div class="admin-table-header">
+            <div class="admin-table-title">Catálogo de servicios</div>
+            <button class="btn-primary" style="font-size:12px;padding:10px 20px;">+ Nuevo servicio</button>
+          </div>
+          <table>
+            <thead><tr><th>#</th><th>Servicio</th><th>Duración</th><th>Precio</th><th>Reservas mes</th></tr></thead>
+            <tbody>
+              <tr><td>01</td><td>Corte & Estilo</td><td>45 min</td><td>35€</td><td>48</td></tr>
+              <tr><td>02</td><td>Color Completo</td><td>90 min</td><td>65€</td><td>32</td></tr>
+              <tr><td>03</td><td>Mechas & Balayage</td><td>120 min</td><td>90€</td><td>18</td></tr>
+              <tr><td>04</td><td>Tratamiento Keratina</td><td>150 min</td><td>110€</td><td>12</td></tr>
+              <tr><td>05</td><td>Peinado & Recogido</td><td>60 min</td><td>45€</td><td>22</td></tr>
+              <tr><td>06</td><td>Hidratación Profunda</td><td>45 min</td><td>40€</td><td>28</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  // ── STATE ──────────────────────────────────────────────────────────────────
+  const booking = { service: null, price: null, duration: null, stylist: null, date: null, dateKey: null, time: null };
+  let calYear, calMonth;
+
+  // Storage key: "bookings:{stylist}:{YYYY-MM-DD}"  →  JSON array of booked times
+  // Shared = true so all users see the same availability in real time
+
+  function storageKey(stylist, dateKey) {
+    // Sanitise stylist name for key (no spaces/accents issues)
+    const s = stylist.normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\s+/g,'-');
+    return 'bookings:' + s + ':' + dateKey;
+  }
+
+  async function getBookedTimes(stylist, dateKey) {
+    if (!stylist || !dateKey || stylist === 'Sin preferencia') return [];
+    try {
+      const res = await window.storage.get(storageKey(stylist, dateKey), true);
+      return res ? JSON.parse(res.value) : [];
+    } catch { return []; }
+  }
+
+  async function saveBooking(b) {
+    // Save under each concrete stylist (if "Sin preferencia" pick first available slot)
+    const stylistsToBlock = b.stylist === 'Sin preferencia'
+      ? ['Laura Alonso'] // fallback assignment
+      : [b.stylist];
+
+    for (const s of stylistsToBlock) {
+      const key = storageKey(s, b.dateKey);
+      let existing = [];
+      try { const r = await window.storage.get(key, true); if (r) existing = JSON.parse(r.value); } catch {}
+      existing.push(b.time);
+      await window.storage.set(key, JSON.stringify(existing), true);
+    }
+
+    // Also store full booking record for admin panel
+    let allBookings = [];
+    try { const r = await window.storage.get('all-bookings', true); if (r) allBookings = JSON.parse(r.value); } catch {}
+    allBookings.unshift({ ...b, id: Date.now(), status: 'confirmed' });
+    await window.storage.set('all-bookings', JSON.stringify(allBookings), true);
+  }
+
+  // ── NAVIGATION ─────────────────────────────────────────────────────────────
+  function showPage(id) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('page-' + id).classList.add('active');
+    document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+    const navEl = document.getElementById('nav-' + id);
+    if (navEl) navEl.classList.add('active');
+    if (id === 'admin') loadAdminData();
+  }
+
+  // ── BOOKING FLOW ───────────────────────────────────────────────────────────
+  function resetBooking() {
+    Object.assign(booking, { service: null, price: null, duration: null, stylist: null, date: null, dateKey: null, time: null });
+    document.getElementById('booking-flow').style.display = '';
+    document.getElementById('booking-confirmation').style.display = 'none';
+    updateSummary();
+    goToStep(1);
+    document.querySelectorAll('.service-select-item').forEach(el => el.classList.remove('selected'));
+    document.querySelectorAll('.stylist-card').forEach(el => el.classList.remove('selected'));
+    setButtonState('btn-next-1', false);
+    setButtonState('btn-next-2', false);
+    setButtonState('btn-confirm', false);
+    document.getElementById('time-section').style.display = 'none';
+    const now = new Date();
+    calYear = now.getFullYear(); calMonth = now.getMonth();
+    renderCalendar();
+  }
+
+  function goToStep(n) {
+    [1,2,3].forEach(i => {
+      document.getElementById('bstep-' + i).classList.toggle('active', i === n);
+      document.getElementById('step-tab-' + i).classList.toggle('active', i === n);
+    });
+  }
+
+  function nextStep(n) {
+    goToStep(n);
+    // When moving to step 3, re-render slots if date already selected
+    if (n === 3 && booking.dateKey) showTimeSlots();
+  }
+
+  function setButtonState(id, enabled) {
+    const btn = document.getElementById(id);
+    btn.disabled = !enabled;
+    btn.style.opacity = enabled ? '1' : '0.3';
+    btn.style.cursor = enabled ? 'pointer' : 'default';
+  }
+
+  function selectService(name, price, duration) {
+    booking.service = name; booking.price = price; booking.duration = duration;
+    document.querySelectorAll('.service-select-item').forEach(el => el.classList.remove('selected'));
+    const map = { 'Corte & Estilo':0,'Color Completo':1,'Mechas & Balayage':2,'Tratamiento Keratina':3,'Peinado & Recogido':4,'Hidratación Profunda':5 };
+    document.querySelectorAll('.service-select-item')[map[name]].classList.add('selected');
+    setButtonState('btn-next-1', true);
+    updateSummary();
+  }
+
+  function selectStylist(name) {
+    booking.stylist = name;
+    booking.date = null; booking.dateKey = null; booking.time = null;
+    document.getElementById('time-section').style.display = 'none';
+    document.querySelectorAll('.stylist-card').forEach(el => el.classList.remove('selected'));
+    const idx = ['Laura Alonso','Marcos Soto','Carla García','Diego Reyes','Sin preferencia'].indexOf(name);
+    if (idx >= 0) document.querySelectorAll('.stylist-card')[idx].classList.add('selected');
+    setButtonState('btn-next-2', true);
+    setButtonState('btn-confirm', false);
+    updateSummary();
+  }
+
+  function updateSummary() {
+    const set = (id, val, empty) => {
+      const el = document.getElementById(id);
+      el.textContent = val || empty;
+      el.classList.toggle('empty', !val);
+    };
+    set('bs-service', booking.service, 'No seleccionado');
+    set('bs-stylist', booking.stylist, 'No seleccionado');
+    set('bs-date', booking.date, 'No seleccionada');
+    set('bs-time', booking.time, 'No seleccionada');
+    set('bs-duration', booking.duration ? booking.duration + ' min' : null, '—');
+    set('bs-price', booking.price ? booking.price + '€' : null, '—');
+  }
+
+  // ── CALENDAR ───────────────────────────────────────────────────────────────
+  const MONTHS_ES = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+  const MONTHS_SHORT = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+  const DAYS_ES = ['L','M','X','J','V','S','D'];
+
+  function renderCalendar() {
+    document.getElementById('cal-month-label').textContent = MONTHS_ES[calMonth] + ' ' + calYear;
+    const grid = document.getElementById('cal-grid');
+    grid.innerHTML = '';
+    DAYS_ES.forEach(d => {
+      const el = document.createElement('div');
+      el.className = 'cal-day-name';
+      el.textContent = d;
+      grid.appendChild(el);
+    });
+    const firstDay = new Date(calYear, calMonth, 1).getDay();
+    const offset = (firstDay === 0) ? 6 : firstDay - 1;
+    const daysInMonth = new Date(calYear, calMonth + 1, 0).getDate();
+    const today = new Date();
+    for (let i = 0; i < offset; i++) {
+      const el = document.createElement('div'); el.className = 'cal-day empty'; grid.appendChild(el);
+    }
+    for (let d = 1; d <= daysInMonth; d++) {
+      const el = document.createElement('div');
+      el.className = 'cal-day';
+      el.textContent = d;
+      const thisDate = new Date(calYear, calMonth, d);
+      const isPast = thisDate < new Date(today.getFullYear(), today.getMonth(), today.getDate());
+      if (isPast) el.classList.add('past');
+      if (d === today.getDate() && calMonth === today.getMonth() && calYear === today.getFullYear()) el.classList.add('today');
+      if (!isPast) el.onclick = () => selectDate(d, el);
+      grid.appendChild(el);
+    }
+  }
+
+  function pad2(n) { return String(n).padStart(2, '0'); }
+
+  function selectDate(d, el) {
+    document.querySelectorAll('.cal-day').forEach(e => e.classList.remove('selected'));
+    el.classList.add('selected');
+    booking.date = d + ' ' + MONTHS_SHORT[calMonth] + ' ' + calYear;
+    booking.dateKey = calYear + '-' + pad2(calMonth + 1) + '-' + pad2(d);
+    booking.time = null;
+    updateSummary();
+    setButtonState('btn-confirm', false);
+    showTimeSlots();
+  }
+
+  async function showTimeSlots() {
+    const section = document.getElementById('time-section');
+    section.style.display = 'block';
+    const container = document.getElementById('time-slots');
+    container.innerHTML = '<div style="color:var(--gray);font-size:13px;padding:8px 0;">Cargando horarios…</div>';
+
+    const ALL_TIMES = ['09:00','09:30','10:00','10:30','11:00','11:30','12:00','12:30','16:00','16:30','17:00','17:30','18:00','18:30','19:00','19:30'];
+
+    // Fetch booked slots for this stylist + date from shared storage
+    const booked = await getBookedTimes(booking.stylist, booking.dateKey);
+
+    container.innerHTML = '';
+    ALL_TIMES.forEach(t => {
+      const el = document.createElement('div');
+      const isBooked = booked.includes(t);
+      el.className = 'time-slot' + (isBooked ? ' unavailable' : '');
+      el.textContent = t;
+      if (isBooked) {
+        el.title = 'Hora ocupada';
+      } else {
+        el.onclick = () => {
+          document.querySelectorAll('.time-slot').forEach(e => e.classList.remove('selected'));
+          el.classList.add('selected');
+          booking.time = t;
+          updateSummary();
+          setButtonState('btn-confirm', true);
+        };
+      }
+      container.appendChild(el);
+    });
+
+    // Show availability indicator
+    const available = ALL_TIMES.length - booked.length;
+    const indicator = document.createElement('div');
+    indicator.style.cssText = 'grid-column:span 4;font-size:11px;color:var(--gray);letter-spacing:0.06em;text-transform:uppercase;padding-top:8px;';
+    indicator.textContent = available + ' horarios disponibles · ' + booked.length + ' ocupados';
+    container.appendChild(indicator);
+  }
+
+  function prevMonth() {
+    calMonth--; if (calMonth < 0) { calMonth = 11; calYear--; }
+    booking.date = null; booking.dateKey = null; booking.time = null;
+    updateSummary();
+    document.getElementById('time-section').style.display = 'none';
+    renderCalendar();
+  }
+
+  function nextMonth() {
+    calMonth++; if (calMonth > 11) { calMonth = 0; calYear++; }
+    booking.date = null; booking.dateKey = null; booking.time = null;
+    updateSummary();
+    document.getElementById('time-section').style.display = 'none';
+    renderCalendar();
+  }
+
+  // ── CONFIRM BOOKING ────────────────────────────────────────────────────────
+  async function confirmBooking() {
+    const btn = document.getElementById('btn-confirm');
+    btn.textContent = 'Guardando…';
+    btn.disabled = true;
+
+    // Double-check slot is still free (race condition protection)
+    const booked = await getBookedTimes(booking.stylist, booking.dateKey);
+    if (booked.includes(booking.time)) {
+      btn.textContent = 'Confirmar reserva';
+      btn.disabled = false;
+      alert('⚠️ Lo sentimos, este horario acaba de ser reservado. Por favor elige otro.');
+      await showTimeSlots();
+      booking.time = null;
+      updateSummary();
+      setButtonState('btn-confirm', false);
+      return;
+    }
+
+    await saveBooking({ ...booking });
+
+    document.getElementById('cf-service').textContent = booking.service;
+    document.getElementById('cf-stylist').textContent = booking.stylist === 'Sin preferencia' ? 'Laura Alonso (asignada)' : booking.stylist;
+    document.getElementById('cf-date').textContent = booking.date;
+    document.getElementById('cf-time').textContent = booking.time;
+    document.getElementById('cf-price').textContent = booking.price + '€';
+    document.getElementById('booking-flow').style.display = 'none';
+    document.getElementById('booking-confirmation').style.display = 'block';
+  }
+
+  // ── ADMIN ──────────────────────────────────────────────────────────────────
+  function showAdminSection(id, el) {
+    document.querySelectorAll('.admin-section').forEach(s => s.classList.remove('active'));
+    document.getElementById('admin-' + id).classList.add('active');
+    document.querySelectorAll('.admin-nav-item').forEach(n => n.classList.remove('active'));
+    el.classList.add('active');
+    if (id === 'citas') loadAdminCitas();
+  }
+
+  async function loadAdminData() {
+    await loadAdminCitas();
+    await loadAdminStats();
+  }
+
+  async function loadAdminStats() {
+    try {
+      const r = await window.storage.get('all-bookings', true);
+      const allBookings = r ? JSON.parse(r.value) : [];
+      const today = new Date().toISOString().slice(0,10);
+      const todayBookings = allBookings.filter(b => b.dateKey === today);
+      const monthIncome = allBookings.reduce((sum, b) => sum + (b.price || 0), 0);
+
+      const statCards = document.querySelectorAll('.stat-card-value');
+      if (statCards[0]) statCards[0].textContent = todayBookings.length || '0';
+      if (statCards[1]) statCards[1].textContent = monthIncome + '€';
+    } catch {}
+  }
+
+  async function loadAdminCitas() {
+    try {
+      const r = await window.storage.get('all-bookings', true);
+      const allBookings = r ? JSON.parse(r.value) : [];
+
+      // Render in the citas table
+      const tbody = document.querySelector('#admin-citas table tbody');
+      if (!tbody) return;
+
+      if (allBookings.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--gray);padding:32px;font-style:italic;">No hay reservas registradas aún</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = allBookings.slice(0, 50).map(b => `
+        <tr>
+          <td>${b.date || '—'}</td>
+          <td>${b.time || '—'}</td>
+          <td>${b.clientName || 'Cliente'}</td>
+          <td>${b.service || '—'}</td>
+          <td>${b.stylist === 'Sin preferencia' ? 'Laura Alonso' : (b.stylist || '—')}</td>
+          <td>${b.price ? b.price + '€' : '—'}</td>
+          <td><span class="badge badge-confirmed">Confirmada</span></td>
+        </tr>
+      `).join('');
+
+      // Also update the dashboard table
+      const dashTbody = document.querySelector('#admin-dashboard table tbody');
+      if (dashTbody) {
+        const today = new Date().toISOString().slice(0,10);
+        const todayOnes = allBookings.filter(b => b.dateKey === today);
+        if (todayOnes.length > 0) {
+          dashTbody.innerHTML = todayOnes.map(b => `
+            <tr>
+              <td>${b.time}</td>
+              <td>Cliente</td>
+              <td>${b.service}</td>
+              <td>${b.stylist === 'Sin preferencia' ? 'Laura Alonso' : b.stylist}</td>
+              <td>${b.price}€</td>
+              <td><span class="badge badge-confirmed">Confirmada</span></td>
+            </tr>
+          `).join('');
+        }
+      }
+    } catch (e) { console.error('loadAdminCitas error', e); }
+  }
+
+  // ── INIT ───────────────────────────────────────────────────────────────────
+  const now = new Date();
+  calYear = now.getFullYear(); calMonth = now.getMonth();
+  renderCalendar();
+</script>
+</body>
+</html>
