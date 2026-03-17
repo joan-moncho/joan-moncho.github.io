@@ -323,7 +323,7 @@
 
 <script>
 // ── SUPABASE INIT ────────────────────────────────────────────────────────────
-const db = window.db.createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
+const db = window.supabase.createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
 const ADMIN_EMAILS = ['joan.moncho.vinaroz@gmail.com']; // ← cambia por tu email de admin
 
 // ── AUTH STATE ───────────────────────────────────────────────────────────────
