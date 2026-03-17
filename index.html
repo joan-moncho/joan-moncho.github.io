@@ -345,7 +345,7 @@ db.auth.onAuthStateChange((event, session) => {
 })();
 
 function updateNavForUser(user) {
-  db. isAdmin = user && ADMIN_EMAILS.includes(user.email);
+  const isAdmin = user && ADMIN_EMAILS.includes(user.email);
   document.getElementById('nav-guest').style.display = user ? 'none' : '';
   document.getElementById('nav-user').style.display  = user ? '' : 'none';
   document.getElementById('nav-admin').style.display = isAdmin ? '' : 'none';
