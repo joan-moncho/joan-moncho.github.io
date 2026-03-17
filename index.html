@@ -323,13 +323,13 @@
 
 <script>
 // ── SUPABASE INIT ────────────────────────────────────────────────────────────
-const supabase = window.supabase.createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
+const supabase = window.db.createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
 const ADMIN_EMAILS = ['joan.moncho.vinaroz@gmail.com']; // ← cambia por tu email de admin
 
 // ── AUTH STATE ───────────────────────────────────────────────────────────────
 let currentUser = null;
 
-supabase.auth.onAuthStateChange((event, session) => {
+db.auth.onAuthStateChange((event, session) => {
   currentUser = session?.user ?? null;
   updateNavForUser(currentUser);
   if (event === 'SIGNED_IN') {
@@ -339,13 +339,13 @@ supabase.auth.onAuthStateChange((event, session) => {
 });
 
 (async () => {
-  const { data: { session } } = await supabase.auth.getSession();
+  const { data: { session } } = await db.auth.getSession();
   currentUser = session?.user ?? null;
   updateNavForUser(currentUser);
 })();
 
 function updateNavForUser(user) {
-  const isAdmin = user && ADMIN_EMAILS.includes(user.email);
+  db. isAdmin = user && ADMIN_EMAILS.includes(user.email);
   document.getElementById('nav-guest').style.display = user ? 'none' : '';
   document.getElementById('nav-user').style.display  = user ? '' : 'none';
   document.getElementById('nav-admin').style.display = isAdmin ? '' : 'none';
@@ -371,7 +371,7 @@ function hideAuthError()    { document.getElementById('auth-error').style.displa
 
 async function loginWithGoogle() {
   hideAuthError();
-  const { error } = await supabase.auth.signInWithOAuth({ provider: 'google', options: { redirectTo: window.location.href } });
+  const { error } = await db.auth.signInWithOAuth({ provider: 'google', options: { redirectTo: window.location.href } });
   if (error) showAuthError(error.message);
 }
 
@@ -380,7 +380,7 @@ async function loginWithEmail() {
   const email = document.getElementById('login-email').value.trim();
   const password = document.getElementById('login-password').value;
   if (!email || !password) return showAuthError('Rellena todos los campos.');
-  const { error } = await supabase.auth.signInWithPassword({ email, password });
+  const { error } = await db.auth.signInWithPassword({ email, password });
   if (error) showAuthError('Email o contraseña incorrectos.');
 }
 
@@ -391,7 +391,7 @@ async function registerWithEmail() {
   const password = document.getElementById('reg-password').value;
   if (!name || !email || !password) return showAuthError('Rellena todos los campos.');
   if (password.length < 6) return showAuthError('La contraseña debe tener mínimo 6 caracteres.');
-  const { error } = await supabase.auth.signUp({ email, password, options: { data: { full_name: name } } });
+  const { error } = await db.auth.signUp({ email, password, options: { data: { full_name: name } } });
   if (error) {
     showAuthError(error.message);
   } else {
@@ -403,7 +403,7 @@ async function registerWithEmail() {
   }
 }
 
-async function logout() { await supabase.auth.signOut(); }
+async function logout() { await db.auth.signOut(); }
 
 // ── NAVIGATION ───────────────────────────────────────────────────────────────
 function showPage(id) {
@@ -513,7 +513,7 @@ async function showTimeSlots() {
   const container = document.getElementById('time-slots');
   container.innerHTML = '<div style="color:var(--gray);font-size:13px;padding:8px 0;grid-column:span 4;">Cargando horarios…</div>';
   const ALL_TIMES = ['09:00','09:30','10:00','10:30','11:00','11:30','12:00','12:30','16:00','16:30','17:00','17:30','18:00','18:30','19:00','19:30'];
-  let query = supabase.from('bookings').select('time').eq('date_key', booking.dateKey).eq('status','confirmed');
+  let query = db.from('bookings').select('time').eq('date_key', booking.dateKey).eq('status','confirmed');
   if (booking.stylist !== 'Sin preferencia') query = query.eq('stylist', booking.stylist);
   const { data } = await query;
   const booked = (data || []).map(r => r.time);
@@ -541,7 +541,7 @@ async function confirmBooking() {
   const btn = document.getElementById('btn-confirm');
   btn.textContent = 'Guardando…'; btn.disabled = true;
   // Anti-collision check
-  let checkQ = supabase.from('bookings').select('id').eq('date_key',booking.dateKey).eq('time',booking.time).eq('status','confirmed');
+  let checkQ = db.from('bookings').select('id').eq('date_key',booking.dateKey).eq('time',booking.time).eq('status','confirmed');
   if (booking.stylist !== 'Sin preferencia') checkQ = checkQ.eq('stylist', booking.stylist);
   const { data: conflict } = await checkQ;
   if (conflict && conflict.length > 0) {
@@ -550,7 +550,7 @@ async function confirmBooking() {
     booking.time = null; updateSummary(); setButtonState('btn-confirm', false); await showTimeSlots(); return;
   }
   const stylistAssigned = booking.stylist === 'Sin preferencia' ? 'Laura Alonso' : booking.stylist;
-  const { error } = await supabase.from('bookings').insert({
+  const { error } = await db.from('bookings').insert({
     user_id: currentUser.id, user_email: currentUser.email,
     user_name: currentUser.user_metadata?.full_name || currentUser.email,
     stylist: stylistAssigned, service: booking.service, price: booking.price,
@@ -572,7 +572,7 @@ async function loadMyBookings() {
   if (!currentUser) return;
   const tbody = document.getElementById('my-bookings-tbody');
   tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--gray);padding:32px;">Cargando…</td></tr>';
-  const { data } = await supabase.from('bookings').select('*').eq('user_id', currentUser.id).order('date_key', { ascending: false });
+  const { data } = await db.from('bookings').select('*').eq('user_id', currentUser.id).order('date_key', { ascending: false });
   if (!data || data.length === 0) {
     tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--gray);padding:48px;font-style:italic;">No tienes citas reservadas aún</td></tr>'; return;
   }
@@ -589,7 +589,7 @@ function showAdminSection(id, el) {
 async function loadAdminData() {
   const today = new Date().toISOString().slice(0,10);
   document.getElementById('admin-date-label').textContent = new Date().toLocaleDateString('es-ES',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
-  const { data: all } = await supabase.from('bookings').select('*').order('date_key',{ascending:false});
+  const { data: all } = await db.from('bookings').select('*').order('date_key',{ascending:false});
   const bookings = all || [];
   const todayOnes = bookings.filter(b => b.date_key === today);
   document.getElementById('stat-today').textContent  = todayOnes.length;
