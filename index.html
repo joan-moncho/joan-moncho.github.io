@@ -436,7 +436,14 @@
 
 <script>
 // ── SUPABASE ──────────────────────────────────────────────────────────────────
-const db = window.supabase.createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
+const db = window.supabase.createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY, {
+  auth: {
+    persistSession: true,
+    autoRefreshToken: true,
+    detectSessionInUrl: true,
+    storageKey: 'punto-zero-auth'
+  }
+});
 
 // ── STATE ─────────────────────────────────────────────────────────────────────
 let currentUser = null;
@@ -728,8 +735,18 @@ async function confirmBooking(){
   if(conflict&&conflict.length>0){btn.textContent='Confirmar reserva';btn.disabled=false;alert('⚠️ Este horario acaba de ser reservado. Por favor elige otro.');booking.time=null;updateSummary();setButtonState('btn-confirm',false);await showTimeSlots();return;}
   const stylistAssigned=booking.stylist==='Sin preferencia'?'Laura Alonso':booking.stylist;
   const userName=currentUser.user_metadata?.full_name||currentUser.email;
-  const{error}=await db.from('bookings').insert({user_id:currentUser.id,user_email:currentUser.email,user_name:userName,stylist:stylistAssigned,service:booking.service,price:booking.price,duration:booking.duration,date:booking.date,date_key:booking.dateKey,time:booking.time,status:'confirmed'});
-  if(error){alert('Error: '+error.message);btn.textContent='Confirmar reserva';btn.disabled=false;return;}
+  let insertError = null;
+  try {
+    const result = await db.from('bookings').insert({user_id:currentUser.id,user_email:currentUser.email,user_name:userName,stylist:stylistAssigned,service:booking.service,price:booking.price,duration:booking.duration,date:booking.date,date_key:booking.dateKey,time:booking.time,status:'confirmed'});
+    insertError = result.error;
+  } catch(e) {
+    if (e.name === 'AbortError') {
+      await new Promise(r => setTimeout(r, 600));
+      const retry = await db.from('bookings').insert({user_id:currentUser.id,user_email:currentUser.email,user_name:userName,stylist:stylistAssigned,service:booking.service,price:booking.price,duration:booking.duration,date:booking.date,date_key:booking.dateKey,time:booking.time,status:'confirmed'});
+      insertError = retry.error;
+    } else { insertError = { message: e.message }; }
+  }
+  if(insertError){alert('Error: '+insertError.message);btn.textContent='Confirmar reserva';btn.disabled=false;return;}
   try{await fetch(`${window.SUPABASE_URL}/functions/v1/send-booking-email`,{method:'POST',headers:{'Content-Type':'application/json','Authorization':`Bearer ${window.SUPABASE_ANON_KEY}`},body:JSON.stringify({to:currentUser.email,name:userName,service:booking.service,stylist:stylistAssigned,date:booking.date,time:booking.time,price:booking.price})});}catch(e){}
   document.getElementById('cf-service').textContent=booking.service;document.getElementById('cf-stylist').textContent=stylistAssigned;
   document.getElementById('cf-date').textContent=booking.date;document.getElementById('cf-time').textContent=booking.time;
