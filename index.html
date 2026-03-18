@@ -13,7 +13,7 @@
 
 <!-- ── NAV ── -->
 <nav>
-  <div class="logo">Punto <span>Zero</span></div>
+  <div class="logo" onclick="showPage('home')" style="cursor:pointer;">Punto <span>Zero</span></div>
   <ul class="nav-links">
     <li><a onclick="showPage('home')" id="nav-home" class="active">Inicio</a></li>
     <li><a onclick="showPage('services')" id="nav-services">Servicios</a></li>
@@ -26,8 +26,8 @@
     </div>
     <div id="nav-user" style="display:none">
       <div class="nav-user-menu">
-        <div class="nav-avatar" id="nav-avatar">U</div>
-        <div class="nav-user-dropdown">
+        <div class="nav-avatar" id="nav-avatar" onclick="toggleUserMenu()">U</div>
+        <div class="nav-user-dropdown" id="nav-user-dropdown">
           <div class="nav-user-name" id="nav-user-name">Usuario</div>
           <div class="nav-user-email" id="nav-user-email"></div>
           <div class="nav-dropdown-divider"></div>
@@ -381,6 +381,19 @@
 // ── SUPABASE ──────────────────────────────────────────────────────────────────
 const db = window.supabase.createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
 const ADMIN_EMAILS = ['joan.moncho.vinaroz@gmail.com'];
+
+// ── USER MENU TOGGLE ─────────────────────────────────────────────────────────
+function toggleUserMenu() {
+  const dropdown = document.getElementById('nav-user-dropdown');
+  const isOpen = dropdown.classList.toggle('open');
+}
+
+document.addEventListener('click', (e) => {
+  const menu = document.querySelector('.nav-user-menu');
+  if (menu && !menu.contains(e.target)) {
+    document.getElementById('nav-user-dropdown')?.classList.remove('open');
+  }
+});
 
 // ── AUTH STATE ────────────────────────────────────────────────────────────────
 let currentUser = null;
