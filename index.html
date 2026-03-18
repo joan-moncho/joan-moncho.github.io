@@ -466,8 +466,10 @@ db.auth.onAuthStateChange(async (event, session) => {
 })();
 
 async function loadUserRole() {
-  const { data } = await db.from('profiles').select('role').eq('id', currentUser.id).single();
-  currentRole = data?.role || 'client';
+  try {
+    const { data, error } = await db.from('profiles').select('role').eq('id', currentUser.id).single();
+    currentRole = data?.role || 'client';
+  } catch(e) { currentRole = 'client'; }
 }
 
 function updateNavForUser(user) {
@@ -676,11 +678,16 @@ async function showTimeSlots(){
   if(booking.stylist!=='Sin preferencia')query=query.eq('stylist',booking.stylist);
   const {data:bookingsData}=await query;
   const existingBookings=bookingsData||[];
-  // Fetch manual blocks
-  let blockQ=db.from('blocked_slots').select('time').eq('date_key',booking.dateKey);
-  if(booking.stylist!=='Sin preferencia')blockQ=blockQ.or(`stylist.eq.${booking.stylist},stylist.eq.todos`);
-  const {data:blocksData}=await blockQ;
-  const manualBlocks=(blocksData||[]).map(b=>b.time);
+  // Fetch manual blocks — only if table exists, ignore errors
+  let manualBlocks = [];
+  try {
+    let blockQ = db.from('blocked_slots').select('time').eq('date_key', booking.dateKey);
+    if (booking.stylist !== 'Sin preferencia') {
+      blockQ = blockQ.or(`stylist.eq.${booking.stylist},stylist.eq.todos`);
+    }
+    const { data: blocksData } = await blockQ;
+    manualBlocks = (blocksData || []).map(b => b.time);
+  } catch(e) { /* tabla vacía o no existe, continuar sin bloqueos */ }
   function toMin(t){const[h,m]=t.split(':').map(Number);return h*60+m;}
   function isBlocked(slot){
     const slotMin=toMin(slot);
