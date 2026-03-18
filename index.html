@@ -662,23 +662,59 @@ async function showTimeSlots(){
   const container=document.getElementById('time-slots');
   container.innerHTML='<div style="color:var(--gray);font-size:13px;padding:8px 0;grid-column:span 4;">Cargando horarios…</div>';
   const ALL_TIMES=['09:00','09:30','10:00','10:30','11:00','11:30','12:00','12:30','16:00','16:30','17:00','17:30','18:00','18:30','19:00','19:30'];
-  let query=db.from('bookings').select('time').eq('date_key',booking.dateKey).eq('status','confirmed');
-  if(booking.stylist!=='Sin preferencia')query=query.eq('stylist',booking.stylist);
+
+  // Fetch bookings with time AND duration to calculate blocked slots
+  let query=db.from('bookings').select('time, duration').eq('date_key',booking.dateKey).eq('status','confirmed');
+  if(booking.stylist!=='Sin preferencia') query=query.eq('stylist',booking.stylist);
   const {data}=await query;
-  const booked=(data||[]).map(r=>r.time);
+  const existingBookings = data || [];
+
+  // Convert "HH:MM" to minutes from midnight
+  function toMin(t) { const [h,m]=t.split(':').map(Number); return h*60+m; }
+
+  // A slot is blocked if it falls within the range [start, start+duration) of any booking
+  function isBlocked(slot) {
+    const slotMin = toMin(slot);
+    return existingBookings.some(b => {
+      const startMin = toMin(b.time);
+      const endMin   = startMin + (b.duration || 30);
+      return slotMin >= startMin && slotMin < endMin;
+    });
+  }
+
+  // Also block slots where the NEW booking would overlap an existing one
+  // i.e. if I book at slotMin for duration D, any existing booking starting between [slotMin, slotMin+D) is a conflict
+  function wouldOverlap(slot) {
+    const slotMin = toMin(slot);
+    const newEnd  = slotMin + (booking.duration || 30);
+    return existingBookings.some(b => {
+      const existStart = toMin(b.time);
+      return existStart >= slotMin && existStart < newEnd;
+    });
+  }
+
+  const booked = ALL_TIMES.filter(t => isBlocked(t) || wouldOverlap(t));
+
   container.innerHTML='';
   ALL_TIMES.forEach(t=>{
     const el=document.createElement('div');
-    const isBooked=booked.includes(t);
-    el.className='time-slot'+(isBooked?' unavailable':'');
+    const unavailable = isBlocked(t) || wouldOverlap(t);
+    el.className='time-slot'+(unavailable?' unavailable':'');
     el.textContent=t;
-    if(isBooked){el.title='Hora ocupada';}
-    else{el.onclick=()=>{document.querySelectorAll('.time-slot').forEach(e=>e.classList.remove('selected'));el.classList.add('selected');booking.time=t;updateSummary();setButtonState('btn-confirm',true);};}
+    if(unavailable){ el.title='Hora ocupada'; }
+    else {
+      el.onclick=()=>{
+        document.querySelectorAll('.time-slot').forEach(e=>e.classList.remove('selected'));
+        el.classList.add('selected');
+        booking.time=t; updateSummary(); setButtonState('btn-confirm',true);
+      };
+    }
     container.appendChild(el);
   });
+  const available = ALL_TIMES.filter(t => !isBlocked(t) && !wouldOverlap(t)).length;
   const indicator=document.createElement('div');
   indicator.style.cssText='grid-column:span 4;font-size:11px;color:var(--gray);letter-spacing:0.06em;text-transform:uppercase;padding-top:8px;';
-  indicator.textContent=(ALL_TIMES.length-booked.length)+' disponibles · '+booked.length+' ocupados';
+  indicator.textContent=available+' disponibles · '+(ALL_TIMES.length-available)+' ocupados';
   container.appendChild(indicator);
 }
 function prevMonth(){calMonth--;if(calMonth<0){calMonth=11;calYear--;}booking.date=null;booking.dateKey=null;booking.time=null;updateSummary();document.getElementById('time-section').style.display='none';renderCalendar();}
