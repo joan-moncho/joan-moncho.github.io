@@ -18,7 +18,6 @@
     <li><a onclick="showPage('home')" id="nav-home" class="active">Inicio</a></li>
     <li><a onclick="showPage('services')" id="nav-services">Servicios</a></li>
     <li><a onclick="showPage('team')" id="nav-team">Equipo</a></li>
-    <li><a onclick="showPage('admin')" id="nav-admin" style="display:none">Admin</a></li>
   </ul>
   <div class="nav-auth">
     <div id="nav-guest">
@@ -31,10 +30,14 @@
           <div class="nav-user-name" id="nav-user-name">Usuario</div>
           <div class="nav-user-email" id="nav-user-email"></div>
           <div class="nav-dropdown-divider"></div>
-          <div class="nav-dropdown-item" onclick="closeUserMenu(); showPage('profile')">👤 Mi perfil</div>
-          <div class="nav-dropdown-item" onclick="closeUserMenu(); showPage('my-bookings')">📅 Mis citas</div>
+          <div class="nav-dropdown-item" onclick="closeUserMenu();showPage('profile')">👤 Mi perfil</div>
+          <div class="nav-dropdown-item" onclick="closeUserMenu();showPage('my-bookings')">📅 Mis citas</div>
+          <div id="nav-admin-link" style="display:none">
+            <div class="nav-dropdown-divider"></div>
+            <div class="nav-dropdown-item" onclick="closeUserMenu();showPage('admin')">⚙️ Panel admin</div>
+          </div>
           <div class="nav-dropdown-divider"></div>
-          <div class="nav-dropdown-item" onclick="closeUserMenu(); logout()">Cerrar sesión</div>
+          <div class="nav-dropdown-item" onclick="closeUserMenu();logout()">Cerrar sesión</div>
         </div>
       </div>
       <button class="nav-cta" onclick="handleReservarClick()">Reservar cita</button>
@@ -96,84 +99,9 @@
       <div id="auth-confirm-notice" style="display:none;text-align:center;padding-top:8px;">
         <div style="font-size:40px;margin-bottom:16px;">✉</div>
         <h3 style="font-family:'Playfair Display',serif;font-size:22px;margin-bottom:12px;">Revisa tu email</h3>
-        <p style="color:var(--gray);font-size:14px;line-height:1.7;">Hemos enviado un enlace de confirmación. Haz clic en él y podrás iniciar sesión.</p>
+        <p style="color:var(--gray);font-size:14px;line-height:1.7;">Hemos enviado un enlace de confirmación. Haz clic en él para activar tu cuenta.</p>
       </div>
     </div>
-  </div>
-</div>
-
-<!-- ── PROFILE ── -->
-<div class="page" id="page-profile">
-  <div class="section" style="max-width:780px;margin:0 auto;">
-
-    <div class="section-header">
-      <h2 class="section-title">Mi <em>perfil</em></h2>
-    </div>
-
-    <!-- Avatar + info -->
-    <div class="profile-hero">
-      <div class="profile-avatar-big" id="profile-avatar-big">U</div>
-      <div>
-        <div class="profile-name" id="profile-name">—</div>
-        <div class="profile-email" id="profile-email">—</div>
-        <div class="profile-since" id="profile-since">—</div>
-      </div>
-    </div>
-
-    <!-- Stats strip -->
-    <div class="profile-stats">
-      <div class="profile-stat"><div class="profile-stat-num" id="pstat-total">—</div><div class="profile-stat-label">Citas totales</div></div>
-      <div class="profile-stat"><div class="profile-stat-num" id="pstat-upcoming">—</div><div class="profile-stat-label">Próximas citas</div></div>
-      <div class="profile-stat"><div class="profile-stat-num" id="pstat-spent">—</div><div class="profile-stat-label">Total gastado</div></div>
-    </div>
-
-    <!-- Edit name -->
-    <div class="profile-section">
-      <div class="profile-section-title">Información personal</div>
-      <div class="profile-field-row">
-        <div style="flex:1;">
-          <div class="auth-label" style="margin-bottom:8px;">Nombre completo</div>
-          <input class="auth-input" type="text" id="profile-name-input" placeholder="Tu nombre">
-        </div>
-        <button class="btn-primary" style="align-self:flex-end;padding:14px 28px;font-size:12px;" onclick="saveProfileName()">Guardar</button>
-      </div>
-      <div class="auth-label" style="margin-top:20px;margin-bottom:8px;">Email</div>
-      <input class="auth-input" type="email" id="profile-email-input" disabled style="opacity:0.5;cursor:not-allowed;">
-      <p style="font-size:12px;color:var(--gray);margin-top:8px;">El email no se puede cambiar.</p>
-      <div class="profile-msg" id="profile-name-msg" style="display:none;"></div>
-    </div>
-
-    <!-- Change password -->
-    <div class="profile-section">
-      <div class="profile-section-title">Cambiar contraseña</div>
-      <div id="profile-pw-google-notice" style="display:none;">
-        <p style="font-size:14px;color:var(--gray);">Tu cuenta usa Google. No puedes cambiar la contraseña desde aquí.</p>
-      </div>
-      <div id="profile-pw-form">
-        <div class="auth-field"><label class="auth-label">Nueva contraseña</label><input class="auth-input" type="password" id="pw-new" placeholder="Mínimo 6 caracteres"></div>
-        <div class="auth-field"><label class="auth-label">Repetir contraseña</label><input class="auth-input" type="password" id="pw-repeat" placeholder="Repite la contraseña"></div>
-        <button class="btn-primary" style="font-size:13px;padding:14px 32px;" onclick="changePassword()">Actualizar contraseña</button>
-        <div class="profile-msg" id="profile-pw-msg" style="display:none;"></div>
-      </div>
-    </div>
-
-    <!-- Upcoming bookings -->
-    <div class="profile-section">
-      <div class="profile-section-title">Próximas citas</div>
-      <div id="profile-upcoming-list">
-        <p style="color:var(--gray);font-size:14px;font-style:italic;">Cargando…</p>
-      </div>
-    </div>
-
-    <!-- Logout -->
-    <div class="profile-section" style="display:flex;justify-content:space-between;align-items:center;">
-      <div>
-        <div style="font-weight:600;font-size:14px;">Cerrar sesión</div>
-        <div style="font-size:13px;color:var(--gray);margin-top:4px;">Salir de tu cuenta en este dispositivo</div>
-      </div>
-      <button class="btn-ghost" onclick="logout()" style="white-space:nowrap;">Cerrar sesión</button>
-    </div>
-
   </div>
 </div>
 
@@ -192,9 +120,7 @@
       <div class="service-card"><div class="service-num">05</div><div class="service-name">Peinado & Recogido</div><div class="service-desc">Para eventos especiales, bodas o cualquier ocasión que merezca un look extraordinario.</div><div class="service-footer"><div class="service-price">45€</div><div class="service-duration">60 min</div></div></div>
       <div class="service-card"><div class="service-num">06</div><div class="service-name">Hidratación Profunda</div><div class="service-desc">Mascarilla nutritiva y ritual de cuidado capilar para restaurar la vitalidad del cabello.</div><div class="service-footer"><div class="service-price">40€</div><div class="service-duration">45 min</div></div></div>
     </div>
-    <div style="text-align:center;margin-top:48px;">
-      <button class="btn-primary" onclick="handleReservarClick()">Reservar una cita</button>
-    </div>
+    <div style="text-align:center;margin-top:48px;"><button class="btn-primary" onclick="handleReservarClick()">Reservar una cita</button></div>
   </div>
 </div>
 
@@ -206,10 +132,10 @@
       <span class="section-tag">4 estilistas</span>
     </div>
     <div class="team-grid">
-      <div class="team-card"><div class="team-avatar" style="background:#1a1a1a;"><div class="team-avatar-initials" style="color:rgba(255,255,255,0.08);">LA</div><div class="team-avatar-label"><div class="team-specialty">Color · Balayage</div></div></div><div class="team-name">Laura Alonso</div><div class="team-role">Directora & Colorista Senior</div><div class="team-rating"><span class="stars">★★★★★</span> 4.9 · 312 reseñas</div></div>
-      <div class="team-card"><div class="team-avatar" style="background:#111;"><div class="team-avatar-initials" style="color:rgba(255,255,255,0.08);">MS</div><div class="team-avatar-label"><div class="team-specialty">Corte · Peinado</div></div></div><div class="team-name">Marcos Soto</div><div class="team-role">Estilista Senior</div><div class="team-rating"><span class="stars">★★★★★</span> 4.8 · 245 reseñas</div></div>
-      <div class="team-card"><div class="team-avatar" style="background:#161616;"><div class="team-avatar-initials" style="color:rgba(255,255,255,0.08);">CG</div><div class="team-avatar-label"><div class="team-specialty">Keratina · Hidratación</div></div></div><div class="team-name">Carla García</div><div class="team-role">Especialista en Tratamientos</div><div class="team-rating"><span class="stars">★★★★★</span> 4.9 · 198 reseñas</div></div>
-      <div class="team-card"><div class="team-avatar" style="background:#0d0d0d;"><div class="team-avatar-initials" style="color:rgba(255,255,255,0.08);">DR</div><div class="team-avatar-label"><div class="team-specialty">Mechas · Color</div></div></div><div class="team-name">Diego Reyes</div><div class="team-role">Colorista & Estilista</div><div class="team-rating"><span class="stars">★★★★☆</span> 4.7 · 156 reseñas</div></div>
+      <div class="team-card"><div class="team-avatar" style="background:#1a1a1a;"><div class="team-avatar-initials" style="color:rgba(255,255,255,0.08);">LA</div><div class="team-avatar-label"><div class="team-specialty">Color · Balayage</div></div></div><div class="team-name">Laura Alonso</div><div class="team-role">Directora & Colorista Senior</div><div class="team-rating"><span class="stars">★★★★★</span> 4.9</div></div>
+      <div class="team-card"><div class="team-avatar" style="background:#111;"><div class="team-avatar-initials" style="color:rgba(255,255,255,0.08);">MS</div><div class="team-avatar-label"><div class="team-specialty">Corte · Peinado</div></div></div><div class="team-name">Marcos Soto</div><div class="team-role">Estilista Senior</div><div class="team-rating"><span class="stars">★★★★★</span> 4.8</div></div>
+      <div class="team-card"><div class="team-avatar" style="background:#161616;"><div class="team-avatar-initials" style="color:rgba(255,255,255,0.08);">CG</div><div class="team-avatar-label"><div class="team-specialty">Keratina · Hidratación</div></div></div><div class="team-name">Carla García</div><div class="team-role">Especialista en Tratamientos</div><div class="team-rating"><span class="stars">★★★★★</span> 4.9</div></div>
+      <div class="team-card"><div class="team-avatar" style="background:#0d0d0d;"><div class="team-avatar-initials" style="color:rgba(255,255,255,0.08);">DR</div><div class="team-avatar-label"><div class="team-specialty">Mechas · Color</div></div></div><div class="team-name">Diego Reyes</div><div class="team-role">Colorista & Estilista</div><div class="team-rating"><span class="stars">★★★★☆</span> 4.7</div></div>
     </div>
   </div>
 </div>
@@ -255,21 +181,14 @@
           <div class="booking-step-content" id="bstep-3">
             <h3 style="font-family:'Playfair Display',serif;font-size:22px;margin-bottom:24px;font-weight:700;">Elige fecha y hora</h3>
             <div class="calendar">
-              <div class="cal-header">
-                <button class="cal-nav" onclick="prevMonth()">‹</button>
-                <div class="cal-month" id="cal-month-label"></div>
-                <button class="cal-nav" onclick="nextMonth()">›</button>
-              </div>
+              <div class="cal-header"><button class="cal-nav" onclick="prevMonth()">‹</button><div class="cal-month" id="cal-month-label"></div><button class="cal-nav" onclick="nextMonth()">›</button></div>
               <div class="cal-grid" id="cal-grid"></div>
             </div>
             <div id="time-section" style="display:none;margin-top:32px;">
               <h4 style="font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:#888;font-weight:500;margin-bottom:16px;">Horarios disponibles</h4>
               <div class="time-slots" id="time-slots"></div>
             </div>
-            <div class="step-nav" style="margin-top:32px;">
-              <button class="btn-ghost" onclick="goToStep(2)">← Atrás</button>
-              <button class="btn-primary" onclick="confirmBooking()" id="btn-confirm" disabled style="opacity:0.3;cursor:default;">Confirmar reserva</button>
-            </div>
+            <div class="step-nav" style="margin-top:32px;"><button class="btn-ghost" onclick="goToStep(2)">← Atrás</button><button class="btn-primary" onclick="confirmBooking()" id="btn-confirm" disabled style="opacity:0.3;cursor:default;">Confirmar reserva</button></div>
           </div>
         </div>
         <div class="booking-summary">
@@ -287,7 +206,7 @@
       <div class="confirmation">
         <div class="confirm-check">✓</div>
         <h2 class="confirm-title">¡Cita <em>confirmada</em>!</h2>
-        <p class="confirm-desc">Tu reserva ha sido guardada. Te hemos enviado un email de confirmación con los detalles.</p>
+        <p class="confirm-desc">Tu reserva ha sido guardada. Te hemos enviado los detalles por email.</p>
         <div class="confirm-details">
           <div class="confirm-detail-row"><span class="confirm-detail-label">Servicio</span><span class="confirm-detail-value" id="cf-service">—</span></div>
           <div class="confirm-detail-row"><span class="confirm-detail-label">Estilista</span><span class="confirm-detail-value" id="cf-stylist">—</span></div>
@@ -295,7 +214,7 @@
           <div class="confirm-detail-row"><span class="confirm-detail-label">Hora</span><span class="confirm-detail-value" id="cf-time">—</span></div>
           <div class="confirm-detail-row"><span class="confirm-detail-label">Total</span><span class="confirm-detail-value" id="cf-price">—</span></div>
         </div>
-        <div style="display:flex;gap:16px;justify-content:center;">
+        <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
           <button class="btn-ghost" onclick="showPage('my-bookings')">Ver mis citas</button>
           <button class="btn-primary" onclick="showPage('home')">Volver al inicio</button>
         </div>
@@ -311,70 +230,206 @@
       <h2 class="section-title">Mis <em>citas</em></h2>
       <button class="btn-primary" style="font-size:13px;padding:12px 24px;" onclick="handleReservarClick()">+ Nueva cita</button>
     </div>
-    <div class="admin-table-wrap">
-      <table>
-        <thead><tr><th>Fecha</th><th>Hora</th><th>Servicio</th><th>Estilista</th><th>Total</th><th>Estado</th><th></th></tr></thead>
-        <tbody id="my-bookings-tbody"><tr><td colspan="7" style="text-align:center;color:var(--gray);padding:48px;font-style:italic;">Cargando tus citas…</td></tr></tbody>
-      </table>
+    <div id="my-bookings-list"></div>
+  </div>
+</div>
+
+<!-- ── PROFILE ── -->
+<div class="page" id="page-profile">
+  <div class="section" style="max-width:780px;margin:0 auto;">
+    <div class="section-header"><h2 class="section-title">Mi <em>perfil</em></h2></div>
+    <div class="profile-hero">
+      <div class="profile-avatar-big" id="profile-avatar-big">U</div>
+      <div>
+        <div class="profile-name" id="profile-name">—</div>
+        <div class="profile-email" id="profile-email">—</div>
+        <div class="profile-since" id="profile-since">—</div>
+      </div>
+    </div>
+    <div class="profile-stats">
+      <div class="profile-stat"><div class="profile-stat-num" id="pstat-total">—</div><div class="profile-stat-label">Citas totales</div></div>
+      <div class="profile-stat"><div class="profile-stat-num" id="pstat-upcoming">—</div><div class="profile-stat-label">Próximas</div></div>
+      <div class="profile-stat"><div class="profile-stat-num" id="pstat-spent">—</div><div class="profile-stat-label">Total gastado</div></div>
+    </div>
+    <div class="profile-section">
+      <div class="profile-section-title">Información personal</div>
+      <div class="profile-field-row">
+        <div style="flex:1;"><div class="auth-label" style="margin-bottom:8px;">Nombre completo</div><input class="auth-input" type="text" id="profile-name-input" placeholder="Tu nombre"></div>
+        <button class="btn-primary" style="align-self:flex-end;padding:14px 28px;font-size:12px;" onclick="saveProfileName()">Guardar</button>
+      </div>
+      <div class="auth-label" style="margin-top:20px;margin-bottom:8px;">Email</div>
+      <input class="auth-input" type="email" id="profile-email-input" disabled style="opacity:0.5;cursor:not-allowed;">
+      <div class="profile-msg" id="profile-name-msg" style="display:none;"></div>
+    </div>
+    <div class="profile-section">
+      <div class="profile-section-title">Cambiar contraseña</div>
+      <div id="profile-pw-google-notice" style="display:none;"><p style="font-size:14px;color:var(--gray);">Tu cuenta usa Google. No puedes cambiar la contraseña desde aquí.</p></div>
+      <div id="profile-pw-form">
+        <div class="auth-field"><label class="auth-label">Nueva contraseña</label><input class="auth-input" type="password" id="pw-new" placeholder="Mínimo 6 caracteres"></div>
+        <div class="auth-field"><label class="auth-label">Repetir contraseña</label><input class="auth-input" type="password" id="pw-repeat" placeholder="Repite la contraseña"></div>
+        <button class="btn-primary" style="font-size:13px;padding:14px 32px;" onclick="changePassword()">Actualizar contraseña</button>
+        <div class="profile-msg" id="profile-pw-msg" style="display:none;"></div>
+      </div>
+    </div>
+    <div class="profile-section">
+      <div class="profile-section-title">Próximas citas</div>
+      <div id="profile-upcoming-list"><p style="color:var(--gray);font-size:14px;font-style:italic;">Cargando…</p></div>
+    </div>
+    <div class="profile-section" style="display:flex;justify-content:space-between;align-items:center;">
+      <div>
+        <div style="font-weight:600;font-size:14px;">Cerrar sesión</div>
+        <div style="font-size:13px;color:var(--gray);margin-top:4px;">Salir de tu cuenta en este dispositivo</div>
+      </div>
+      <button class="btn-ghost" onclick="logout()">Cerrar sesión</button>
     </div>
   </div>
 </div>
 
 <!-- ── ADMIN ── -->
 <div class="page" id="page-admin">
-  <div class="admin-layout">
+  <div class="admin-wrap">
+
+    <!-- Sidebar -->
     <div class="admin-sidebar">
-      <div class="admin-sidebar-title">Panel de Control</div>
-      <div class="admin-nav-item active" onclick="showAdminSection('dashboard',this)"><span class="admin-nav-icon">◈</span> Dashboard</div>
-      <div class="admin-nav-item" onclick="showAdminSection('citas',this)"><span class="admin-nav-icon">◷</span> Citas</div>
-      <div class="admin-nav-item" onclick="showAdminSection('equipo',this)"><span class="admin-nav-icon">◇</span> Equipo</div>
-      <div class="admin-nav-item" onclick="showAdminSection('servicios',this)"><span class="admin-nav-icon">◈</span> Servicios</div>
+      <div class="admin-sidebar-logo">Punto <span>Zero</span></div>
+      <div class="admin-sidebar-subtitle">Panel de Control</div>
+      <nav class="admin-nav">
+        <div class="admin-nav-item active" data-section="dashboard" onclick="switchAdminTab('dashboard',this)">
+          <span class="admin-nav-icon">◈</span> Dashboard
+        </div>
+        <div class="admin-nav-item" data-section="citas" onclick="switchAdminTab('citas',this)">
+          <span class="admin-nav-icon">◷</span> Reservas
+        </div>
+        <div class="admin-nav-item" data-section="bloqueos" onclick="switchAdminTab('bloqueos',this)">
+          <span class="admin-nav-icon">⊗</span> Bloqueos
+        </div>
+        <div class="admin-nav-item" data-section="clientes" onclick="switchAdminTab('clientes',this)">
+          <span class="admin-nav-icon">◇</span> Clientes
+        </div>
+      </nav>
+      <div class="admin-sidebar-back" onclick="showPage('home')">← Volver a la app</div>
     </div>
+
+    <!-- Content -->
     <div class="admin-content">
+
+      <!-- DASHBOARD -->
       <div class="admin-section active" id="admin-dashboard">
-        <div class="admin-header"><div class="admin-title">Dashboard</div><div class="admin-subtitle" id="admin-date-label"></div></div>
+        <div class="admin-header">
+          <div class="admin-title">Dashboard</div>
+          <div class="admin-subtitle" id="admin-date-label"></div>
+        </div>
         <div class="stats-row">
           <div class="stat-card"><div class="stat-card-label">Citas hoy</div><div class="stat-card-value" id="stat-today">—</div></div>
-          <div class="stat-card"><div class="stat-card-label">Ingresos totales</div><div class="stat-card-value" id="stat-income">—</div></div>
+          <div class="stat-card"><div class="stat-card-label">Esta semana</div><div class="stat-card-value" id="stat-week">—</div></div>
+          <div class="stat-card"><div class="stat-card-label">Ingresos mes</div><div class="stat-card-value" id="stat-income">—</div></div>
           <div class="stat-card"><div class="stat-card-label">Total reservas</div><div class="stat-card-value" id="stat-total">—</div></div>
-          <div class="stat-card"><div class="stat-card-label">Valoración media</div><div class="stat-card-value">4.9</div></div>
         </div>
-        <div class="admin-table-wrap">
-          <div class="admin-table-header"><div class="admin-table-title">Citas de hoy</div></div>
-          <table><thead><tr><th>Hora</th><th>Cliente</th><th>Servicio</th><th>Estilista</th><th>Total</th><th>Estado</th></tr></thead>
-          <tbody id="admin-today-tbody"><tr><td colspan="6" style="text-align:center;color:var(--gray);padding:32px;">Cargando…</td></tr></tbody></table>
+        <!-- Today's agenda -->
+        <div class="admin-card">
+          <div class="admin-card-header">
+            <div class="admin-card-title">Agenda de hoy</div>
+            <div id="admin-today-filter" style="display:flex;gap:8px;flex-wrap:wrap;"></div>
+          </div>
+          <div id="admin-today-list"></div>
         </div>
       </div>
+
+      <!-- RESERVAS -->
       <div class="admin-section" id="admin-citas">
-        <div class="admin-header"><div class="admin-title">Todas las citas</div></div>
-        <div class="admin-table-wrap">
-          <div class="admin-table-header"><div class="admin-table-title">Historial de reservas</div></div>
-          <table><thead><tr><th>Fecha</th><th>Hora</th><th>Cliente</th><th>Servicio</th><th>Estilista</th><th>Total</th><th>Estado</th></tr></thead>
-          <tbody id="admin-all-tbody"><tr><td colspan="7" style="text-align:center;color:var(--gray);padding:32px;">Cargando…</td></tr></tbody></table>
+        <div class="admin-header">
+          <div class="admin-title">Reservas</div>
+        </div>
+        <!-- Filters -->
+        <div class="admin-filters">
+          <input class="admin-filter-input" type="date" id="filter-date" onchange="loadAdminBookings()">
+          <select class="admin-filter-input" id="filter-stylist" onchange="loadAdminBookings()">
+            <option value="">Todos los estilistas</option>
+            <option>Laura Alonso</option>
+            <option>Marcos Soto</option>
+            <option>Carla García</option>
+            <option>Diego Reyes</option>
+          </select>
+          <select class="admin-filter-input" id="filter-status" onchange="loadAdminBookings()">
+            <option value="">Todos los estados</option>
+            <option value="confirmed">Confirmadas</option>
+            <option value="cancelled">Canceladas</option>
+          </select>
+          <button class="btn-ghost" style="font-size:12px;padding:10px 16px;" onclick="clearAdminFilters()">Limpiar</button>
+        </div>
+        <div id="admin-bookings-list"></div>
+      </div>
+
+      <!-- BLOQUEOS -->
+      <div class="admin-section" id="admin-bloqueos">
+        <div class="admin-header">
+          <div class="admin-title">Bloqueos de horario</div>
+        </div>
+        <div class="admin-card" style="margin-bottom:24px;">
+          <div class="admin-card-header"><div class="admin-card-title">Bloquear horario</div></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;padding:24px;">
+            <div>
+              <div class="auth-label" style="margin-bottom:8px;">Estilista</div>
+              <select class="admin-filter-input" id="block-stylist" style="width:100%;">
+                <option value="todos">Todos los estilistas</option>
+                <option>Laura Alonso</option>
+                <option>Marcos Soto</option>
+                <option>Carla García</option>
+                <option>Diego Reyes</option>
+              </select>
+            </div>
+            <div>
+              <div class="auth-label" style="margin-bottom:8px;">Fecha</div>
+              <input class="admin-filter-input" type="date" id="block-date" style="width:100%;">
+            </div>
+            <div>
+              <div class="auth-label" style="margin-bottom:8px;">Hora (opcional — vacío = día completo)</div>
+              <select class="admin-filter-input" id="block-time" style="width:100%;">
+                <option value="">Día completo</option>
+                <option>09:00</option><option>09:30</option><option>10:00</option><option>10:30</option>
+                <option>11:00</option><option>11:30</option><option>12:00</option><option>12:30</option>
+                <option>16:00</option><option>16:30</option><option>17:00</option><option>17:30</option>
+                <option>18:00</option><option>18:30</option><option>19:00</option><option>19:30</option>
+              </select>
+            </div>
+            <div>
+              <div class="auth-label" style="margin-bottom:8px;">Motivo (opcional)</div>
+              <input class="admin-filter-input" type="text" id="block-reason" placeholder="Ej: Vacaciones" style="width:100%;">
+            </div>
+          </div>
+          <div style="padding:0 24px 24px;">
+            <button class="btn-primary" style="font-size:13px;" onclick="addBlock()">Bloquear horario</button>
+            <span id="block-msg" style="margin-left:16px;font-size:13px;"></span>
+          </div>
+        </div>
+        <div class="admin-card">
+          <div class="admin-card-header"><div class="admin-card-title">Bloqueos activos</div></div>
+          <div id="admin-blocks-list"></div>
         </div>
       </div>
-      <div class="admin-section" id="admin-equipo">
-        <div class="admin-header"><div class="admin-title">Equipo</div></div>
-        <div class="admin-table-wrap"><div class="admin-table-header"><div class="admin-table-title">Estilistas</div></div>
-        <table><thead><tr><th>Nombre</th><th>Especialidad</th><th>Valoración</th></tr></thead><tbody>
-          <tr><td><strong>Laura Alonso</strong></td><td>Colorista Senior</td><td>★★★★★ 4.9</td></tr>
-          <tr><td><strong>Marcos Soto</strong></td><td>Estilista Senior</td><td>★★★★★ 4.8</td></tr>
-          <tr><td><strong>Carla García</strong></td><td>Tratamientos</td><td>★★★★★ 4.9</td></tr>
-          <tr><td><strong>Diego Reyes</strong></td><td>Colorista</td><td>★★★★☆ 4.7</td></tr>
-        </tbody></table></div>
+
+      <!-- CLIENTES -->
+      <div class="admin-section" id="admin-clientes">
+        <div class="admin-header"><div class="admin-title">Clientes</div></div>
+        <div id="admin-clients-list"></div>
       </div>
-      <div class="admin-section" id="admin-servicios">
-        <div class="admin-header"><div class="admin-title">Servicios</div></div>
-        <div class="admin-table-wrap"><div class="admin-table-header"><div class="admin-table-title">Catálogo</div></div>
-        <table><thead><tr><th>#</th><th>Servicio</th><th>Duración</th><th>Precio</th></tr></thead><tbody>
-          <tr><td>01</td><td>Corte & Estilo</td><td>45 min</td><td>35€</td></tr>
-          <tr><td>02</td><td>Color Completo</td><td>90 min</td><td>65€</td></tr>
-          <tr><td>03</td><td>Mechas & Balayage</td><td>120 min</td><td>90€</td></tr>
-          <tr><td>04</td><td>Tratamiento Keratina</td><td>150 min</td><td>110€</td></tr>
-          <tr><td>05</td><td>Peinado & Recogido</td><td>60 min</td><td>45€</td></tr>
-          <tr><td>06</td><td>Hidratación Profunda</td><td>45 min</td><td>40€</td></tr>
-        </tbody></table></div>
-      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ── CANCEL MODAL ── -->
+<div id="cancel-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:500;display:none;align-items:center;justify-content:center;padding:20px;">
+  <div style="background:var(--white);padding:32px;max-width:400px;width:100%;border:1px solid var(--light-gray);">
+    <h3 style="font-family:'Playfair Display',serif;font-size:20px;margin-bottom:16px;">Cancelar reserva</h3>
+    <p style="font-size:14px;color:var(--gray);margin-bottom:20px;" id="cancel-modal-desc">¿Seguro que quieres cancelar esta cita?</p>
+    <div class="auth-field" id="cancel-reason-field" style="display:none;">
+      <label class="auth-label">Motivo (opcional)</label>
+      <input class="auth-input" type="text" id="cancel-reason-input" placeholder="Ej: El cliente no se presentó">
+    </div>
+    <div style="display:flex;gap:12px;margin-top:8px;">
+      <button class="btn-ghost" style="flex:1;" onclick="closeCancelModal()">Volver</button>
+      <button class="btn-primary" style="flex:1;background:#c04040;" onclick="executeCancelBooking()">Cancelar cita</button>
     </div>
   </div>
 </div>
@@ -382,41 +437,43 @@
 <script>
 // ── SUPABASE ──────────────────────────────────────────────────────────────────
 const db = window.supabase.createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
-const ADMIN_EMAILS = ['joan.moncho.vinaroz@gmail.com'];
 
-// ── USER MENU TOGGLE ─────────────────────────────────────────────────────────
-function toggleUserMenu(e) {
-  e.stopPropagation();
-  document.getElementById('nav-user-dropdown').classList.toggle('open');
-}
-function closeUserMenu() {
-  document.getElementById('nav-user-dropdown').classList.remove('open');
-}
+// ── STATE ─────────────────────────────────────────────────────────────────────
+let currentUser = null;
+let currentRole = 'client';
+let cancelTargetId = null;
+let cancelIsAdmin = false;
+
+// ── USER MENU ─────────────────────────────────────────────────────────────────
+function toggleUserMenu(e) { e.stopPropagation(); document.getElementById('nav-user-dropdown').classList.toggle('open'); }
+function closeUserMenu()   { document.getElementById('nav-user-dropdown').classList.remove('open'); }
 document.addEventListener('click', () => closeUserMenu());
 
 // ── AUTH STATE ────────────────────────────────────────────────────────────────
-let currentUser = null;
-
-db.auth.onAuthStateChange((event, session) => {
+db.auth.onAuthStateChange(async (event, session) => {
   currentUser = session?.user ?? null;
+  if (currentUser) await loadUserRole();
   updateNavForUser(currentUser);
-  if (event === 'SIGNED_IN') {
-    if (document.querySelector('.page.active')?.id === 'page-auth') showPage('home');
-  }
-  if (event === 'SIGNED_OUT') showPage('home');
+  if (event === 'SIGNED_IN' && document.querySelector('.page.active')?.id === 'page-auth') showPage('home');
+  if (event === 'SIGNED_OUT') { currentRole = 'client'; showPage('home'); }
 });
 
 (async () => {
   const { data: { session } } = await db.auth.getSession();
   currentUser = session?.user ?? null;
+  if (currentUser) await loadUserRole();
   updateNavForUser(currentUser);
 })();
 
+async function loadUserRole() {
+  const { data } = await db.from('profiles').select('role').eq('id', currentUser.id).single();
+  currentRole = data?.role || 'client';
+}
+
 function updateNavForUser(user) {
-  const isAdmin = user && ADMIN_EMAILS.includes(user.email);
   document.getElementById('nav-guest').style.display = user ? 'none' : '';
   document.getElementById('nav-user').style.display  = user ? '' : 'none';
-  document.getElementById('nav-admin').style.display = isAdmin ? '' : 'none';
+  document.getElementById('nav-admin-link').style.display = currentRole === 'admin' ? '' : 'none';
   if (user) {
     const name = user.user_metadata?.full_name || user.email.split('@')[0];
     document.getElementById('nav-user-name').textContent  = name;
@@ -425,28 +482,28 @@ function updateNavForUser(user) {
   }
 }
 
-// ── AUTH ──────────────────────────────────────────────────────────────────────
+// ── AUTH FUNCTIONS ────────────────────────────────────────────────────────────
 function switchAuthTab(tab) {
-  document.getElementById('tab-login').classList.toggle('active', tab === 'login');
-  document.getElementById('tab-register').classList.toggle('active', tab === 'register');
-  document.getElementById('form-login').style.display    = tab === 'login' ? '' : 'none';
-  document.getElementById('form-register').style.display = tab === 'register' ? '' : 'none';
+  document.getElementById('tab-login').classList.toggle('active', tab==='login');
+  document.getElementById('tab-register').classList.toggle('active', tab==='register');
+  document.getElementById('form-login').style.display    = tab==='login'?'':'none';
+  document.getElementById('form-register').style.display = tab==='register'?'':'none';
   document.getElementById('auth-confirm-notice').style.display = 'none';
   hideAuthError();
 }
-function showAuthError(msg) { const el = document.getElementById('auth-error'); el.textContent = msg; el.style.display = ''; }
-function hideAuthError()    { document.getElementById('auth-error').style.display = 'none'; }
+function showAuthError(msg) { const el=document.getElementById('auth-error'); el.textContent=msg; el.style.display=''; }
+function hideAuthError()    { document.getElementById('auth-error').style.display='none'; }
 
 async function loginWithGoogle() {
   hideAuthError();
-  const { error } = await db.auth.signInWithOAuth({ provider: 'google', options: { redirectTo: window.location.href } });
+  const { error } = await db.auth.signInWithOAuth({ provider:'google', options:{ redirectTo: window.location.href } });
   if (error) showAuthError(error.message);
 }
 async function loginWithEmail() {
   hideAuthError();
   const email = document.getElementById('login-email').value.trim();
   const password = document.getElementById('login-password').value;
-  if (!email || !password) return showAuthError('Rellena todos los campos.');
+  if (!email||!password) return showAuthError('Rellena todos los campos.');
   const { error } = await db.auth.signInWithPassword({ email, password });
   if (error) showAuthError('Email o contraseña incorrectos.');
 }
@@ -455,28 +512,28 @@ async function registerWithEmail() {
   const name = document.getElementById('reg-name').value.trim();
   const email = document.getElementById('reg-email').value.trim();
   const password = document.getElementById('reg-password').value;
-  if (!name || !email || !password) return showAuthError('Rellena todos los campos.');
-  if (password.length < 6) return showAuthError('La contraseña debe tener mínimo 6 caracteres.');
-  const { error } = await db.auth.signUp({ email, password, options: { data: { full_name: name } } });
+  if (!name||!email||!password) return showAuthError('Rellena todos los campos.');
+  if (password.length<6) return showAuthError('La contraseña debe tener mínimo 6 caracteres.');
+  const { error } = await db.auth.signUp({ email, password, options:{ data:{ full_name:name } } });
   if (error) { showAuthError(error.message); return; }
-  document.getElementById('form-register').style.display = 'none';
-  document.querySelector('.auth-tabs').style.display = 'none';
-  document.querySelector('.btn-google').style.display = 'none';
-  document.querySelector('.auth-divider').style.display = 'none';
-  document.getElementById('auth-confirm-notice').style.display = '';
+  document.getElementById('form-register').style.display='none';
+  document.querySelector('.auth-tabs').style.display='none';
+  document.querySelector('.btn-google').style.display='none';
+  document.querySelector('.auth-divider').style.display='none';
+  document.getElementById('auth-confirm-notice').style.display='';
 }
 async function logout() { await db.auth.signOut(); }
 
 // ── NAVIGATION ────────────────────────────────────────────────────────────────
 function showPage(id) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.getElementById('page-' + id).classList.add('active');
-  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
-  const navEl = document.getElementById('nav-' + id);
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  document.querySelectorAll('.nav-links a').forEach(a=>a.classList.remove('active'));
+  const navEl = document.getElementById('nav-'+id);
   if (navEl) navEl.classList.add('active');
-  if (id === 'admin')       loadAdminData();
-  if (id === 'my-bookings') loadMyBookings();
-  if (id === 'profile')     loadProfile();
+  if (id==='admin')       { if(currentRole==='admin') loadAdminDashboard(); else { alert('Acceso denegado.'); showPage('home'); } }
+  if (id==='my-bookings') loadMyBookings();
+  if (id==='profile')     loadProfile();
 }
 function handleReservarClick() {
   if (currentUser) { showPage('booking'); resetBooking(); }
@@ -488,159 +545,113 @@ async function loadProfile() {
   if (!currentUser) return;
   const name = currentUser.user_metadata?.full_name || currentUser.email.split('@')[0];
   const isGoogle = currentUser.app_metadata?.provider === 'google';
-
-  // Avatar & basic info
   document.getElementById('profile-avatar-big').textContent = name[0].toUpperCase();
-  document.getElementById('profile-name').textContent       = name;
-  document.getElementById('profile-email').textContent      = currentUser.email;
-  document.getElementById('profile-since').textContent      = 'Cliente desde ' + new Date(currentUser.created_at).toLocaleDateString('es-ES', { month: 'long', year: 'numeric' });
-  document.getElementById('profile-name-input').value       = name;
-  document.getElementById('profile-email-input').value      = currentUser.email;
-
-  // Google users can't change password
-  document.getElementById('profile-pw-google-notice').style.display = isGoogle ? '' : 'none';
-  document.getElementById('profile-pw-form').style.display           = isGoogle ? 'none' : '';
-
-  // Stats + upcoming
-  const { data: bookings } = await db.from('bookings').select('*').eq('user_id', currentUser.id);
-  const all = bookings || [];
+  document.getElementById('profile-name').textContent  = name;
+  document.getElementById('profile-email').textContent  = currentUser.email;
+  document.getElementById('profile-since').textContent  = 'Cliente desde ' + new Date(currentUser.created_at).toLocaleDateString('es-ES',{month:'long',year:'numeric'});
+  document.getElementById('profile-name-input').value   = name;
+  document.getElementById('profile-email-input').value  = currentUser.email;
+  document.getElementById('profile-pw-google-notice').style.display = isGoogle?'':'none';
+  document.getElementById('profile-pw-form').style.display           = isGoogle?'none':'';
+  const { data } = await db.from('bookings').select('*').eq('user_id', currentUser.id);
+  const all = data||[];
   const today = new Date().toISOString().slice(0,10);
-  const upcoming = all.filter(b => b.date_key >= today && b.status === 'confirmed');
-  const totalSpent = all.filter(b => b.status === 'confirmed').reduce((s, b) => s + (b.price || 0), 0);
-
+  const upcoming = all.filter(b=>b.date_key>=today&&b.status==='confirmed');
   document.getElementById('pstat-total').textContent    = all.length;
   document.getElementById('pstat-upcoming').textContent = upcoming.length;
-  document.getElementById('pstat-spent').textContent    = totalSpent + '€';
-
-  // Upcoming list
+  document.getElementById('pstat-spent').textContent    = all.filter(b=>b.status==='confirmed').reduce((s,b)=>s+(b.price||0),0)+'€';
   const container = document.getElementById('profile-upcoming-list');
-  if (upcoming.length === 0) {
-    container.innerHTML = '<p style="color:var(--gray);font-size:14px;font-style:italic;">No tienes citas próximas. <a onclick="handleReservarClick()" style="color:var(--black);cursor:pointer;font-weight:500;text-decoration:underline;">Reservar ahora</a></p>';
+  if (upcoming.length===0) {
+    container.innerHTML='<p style="color:var(--gray);font-size:14px;font-style:italic;">No tienes citas próximas. <a onclick="handleReservarClick()" style="color:var(--black);cursor:pointer;font-weight:500;text-decoration:underline;">Reservar ahora</a></p>';
     return;
   }
-  container.innerHTML = upcoming.slice(0,3).map(b => `
+  container.innerHTML=upcoming.slice(0,3).map(b=>`
     <div class="upcoming-booking-card">
-      <div>
-        <div style="font-family:'Playfair Display',serif;font-size:17px;font-weight:700;">${b.service}</div>
-        <div style="font-size:13px;color:var(--gray);margin-top:4px;">con ${b.stylist} · ${b.duration} min</div>
-      </div>
-      <div style="text-align:right;">
-        <div style="font-weight:600;font-size:14px;">${b.date} · ${b.time}</div>
-        <div style="font-size:13px;color:var(--gray);margin-top:4px;">${b.price}€</div>
-      </div>
-    </div>
-  `).join('');
+      <div><div style="font-family:'Playfair Display',serif;font-size:17px;font-weight:700;">${b.service}</div><div style="font-size:13px;color:var(--gray);margin-top:4px;">con ${b.stylist} · ${b.duration} min</div></div>
+      <div style="text-align:right;"><div style="font-weight:600;font-size:14px;">${b.date} · ${b.time}</div><div style="font-size:13px;color:var(--gray);margin-top:4px;">${b.price}€</div></div>
+    </div>`).join('');
 }
-
 async function saveProfileName() {
   const name = document.getElementById('profile-name-input').value.trim();
-  if (!name) return showProfileMsg('profile-name-msg', 'El nombre no puede estar vacío.', false);
-  const { error } = await db.auth.updateUser({ data: { full_name: name } });
-  if (error) {
-    showProfileMsg('profile-name-msg', 'Error al guardar: ' + error.message, false);
-  } else {
-    document.getElementById('profile-name').textContent = name;
-    document.getElementById('nav-user-name').textContent = name;
-    document.getElementById('nav-avatar').textContent = name[0].toUpperCase();
-    document.getElementById('profile-avatar-big').textContent = name[0].toUpperCase();
-    showProfileMsg('profile-name-msg', '✓ Nombre actualizado correctamente.', true);
-  }
+  if (!name) return showProfileMsg('profile-name-msg','El nombre no puede estar vacío.',false);
+  const { error } = await db.auth.updateUser({ data:{ full_name:name } });
+  if (error) { showProfileMsg('profile-name-msg','Error: '+error.message,false); return; }
+  document.getElementById('profile-name').textContent=name;
+  document.getElementById('nav-user-name').textContent=name;
+  document.getElementById('nav-avatar').textContent=name[0].toUpperCase();
+  document.getElementById('profile-avatar-big').textContent=name[0].toUpperCase();
+  showProfileMsg('profile-name-msg','✓ Nombre actualizado.',true);
 }
-
 async function changePassword() {
-  const pw1 = document.getElementById('pw-new').value;
-  const pw2 = document.getElementById('pw-repeat').value;
-  if (!pw1 || !pw2) return showProfileMsg('profile-pw-msg', 'Rellena ambos campos.', false);
-  if (pw1.length < 6)  return showProfileMsg('profile-pw-msg', 'Mínimo 6 caracteres.', false);
-  if (pw1 !== pw2)     return showProfileMsg('profile-pw-msg', 'Las contraseñas no coinciden.', false);
-  const { error } = await db.auth.updateUser({ password: pw1 });
-  if (error) {
-    showProfileMsg('profile-pw-msg', 'Error: ' + error.message, false);
-  } else {
-    document.getElementById('pw-new').value = '';
-    document.getElementById('pw-repeat').value = '';
-    showProfileMsg('profile-pw-msg', '✓ Contraseña actualizada correctamente.', true);
-  }
+  const pw1=document.getElementById('pw-new').value;
+  const pw2=document.getElementById('pw-repeat').value;
+  if (!pw1||!pw2) return showProfileMsg('profile-pw-msg','Rellena ambos campos.',false);
+  if (pw1.length<6) return showProfileMsg('profile-pw-msg','Mínimo 6 caracteres.',false);
+  if (pw1!==pw2)   return showProfileMsg('profile-pw-msg','Las contraseñas no coinciden.',false);
+  const { error } = await db.auth.updateUser({ password:pw1 });
+  if (error) { showProfileMsg('profile-pw-msg','Error: '+error.message,false); return; }
+  document.getElementById('pw-new').value=''; document.getElementById('pw-repeat').value='';
+  showProfileMsg('profile-pw-msg','✓ Contraseña actualizada.',true);
 }
-
-function showProfileMsg(id, msg, ok) {
-  const el = document.getElementById(id);
-  el.textContent = msg;
-  el.style.display = '';
-  el.style.color = ok ? '#2a7a2a' : '#c04040';
-  el.style.fontSize = '13px';
-  el.style.marginTop = '12px';
-  setTimeout(() => { el.style.display = 'none'; }, 4000);
+function showProfileMsg(id,msg,ok) {
+  const el=document.getElementById(id); el.textContent=msg; el.style.display='';
+  el.style.color=ok?'#2a7a2a':'#c04040'; el.style.fontSize='13px'; el.style.marginTop='12px';
+  setTimeout(()=>{el.style.display='none';},4000);
 }
 
 // ── BOOKING ───────────────────────────────────────────────────────────────────
-const booking = { service:null, price:null, duration:null, stylist:null, date:null, dateKey:null, time:null };
-let calYear, calMonth;
-
-function resetBooking() {
-  Object.assign(booking, { service:null, price:null, duration:null, stylist:null, date:null, dateKey:null, time:null });
-  document.getElementById('booking-flow').style.display = '';
-  document.getElementById('booking-confirmation').style.display = 'none';
-  updateSummary(); goToStep(1);
-  document.querySelectorAll('.service-select-item').forEach(el => el.classList.remove('selected'));
-  document.querySelectorAll('.stylist-card').forEach(el => el.classList.remove('selected'));
-  setButtonState('btn-next-1', false); setButtonState('btn-next-2', false); setButtonState('btn-confirm', false);
-  document.getElementById('time-section').style.display = 'none';
-  const n = new Date(); calYear = n.getFullYear(); calMonth = n.getMonth();
-  renderCalendar();
+const booking={service:null,price:null,duration:null,stylist:null,date:null,dateKey:null,time:null};
+let calYear,calMonth;
+function resetBooking(){
+  Object.assign(booking,{service:null,price:null,duration:null,stylist:null,date:null,dateKey:null,time:null});
+  document.getElementById('booking-flow').style.display='';
+  document.getElementById('booking-confirmation').style.display='none';
+  updateSummary();goToStep(1);
+  document.querySelectorAll('.service-select-item').forEach(el=>el.classList.remove('selected'));
+  document.querySelectorAll('.stylist-card').forEach(el=>el.classList.remove('selected'));
+  setButtonState('btn-next-1',false);setButtonState('btn-next-2',false);setButtonState('btn-confirm',false);
+  document.getElementById('time-section').style.display='none';
+  const n=new Date();calYear=n.getFullYear();calMonth=n.getMonth();renderCalendar();
 }
-function goToStep(n) {
-  [1,2,3].forEach(i => {
-    document.getElementById('bstep-' + i).classList.toggle('active', i === n);
-    document.getElementById('step-tab-' + i).classList.toggle('active', i === n);
-  });
-}
-function nextStep(n) { goToStep(n); if (n === 3 && booking.dateKey) showTimeSlots(); }
-function setButtonState(id, enabled) {
-  const btn = document.getElementById(id);
-  btn.disabled = !enabled; btn.style.opacity = enabled?'1':'0.3'; btn.style.cursor = enabled?'pointer':'default';
-}
-function selectService(name, price, duration) {
-  booking.service = name; booking.price = price; booking.duration = duration;
-  document.querySelectorAll('.service-select-item').forEach(el => el.classList.remove('selected'));
-  const map = {'Corte & Estilo':0,'Color Completo':1,'Mechas & Balayage':2,'Tratamiento Keratina':3,'Peinado & Recogido':4,'Hidratación Profunda':5};
+function goToStep(n){[1,2,3].forEach(i=>{document.getElementById('bstep-'+i).classList.toggle('active',i===n);document.getElementById('step-tab-'+i).classList.toggle('active',i===n);});}
+function nextStep(n){goToStep(n);if(n===3&&booking.dateKey)showTimeSlots();}
+function setButtonState(id,enabled){const btn=document.getElementById(id);btn.disabled=!enabled;btn.style.opacity=enabled?'1':'0.3';btn.style.cursor=enabled?'pointer':'default';}
+function selectService(name,price,duration){
+  booking.service=name;booking.price=price;booking.duration=duration;
+  document.querySelectorAll('.service-select-item').forEach(el=>el.classList.remove('selected'));
+  const map={'Corte & Estilo':0,'Color Completo':1,'Mechas & Balayage':2,'Tratamiento Keratina':3,'Peinado & Recogido':4,'Hidratación Profunda':5};
   document.querySelectorAll('.service-select-item')[map[name]].classList.add('selected');
-  setButtonState('btn-next-1', true); updateSummary();
+  setButtonState('btn-next-1',true);updateSummary();
 }
-function selectStylist(name) {
-  booking.stylist = name; booking.date = null; booking.dateKey = null; booking.time = null;
-  document.getElementById('time-section').style.display = 'none';
-  document.querySelectorAll('.stylist-card').forEach(el => el.classList.remove('selected'));
-  const idx = ['Laura Alonso','Marcos Soto','Carla García','Diego Reyes','Sin preferencia'].indexOf(name);
-  if (idx >= 0) document.querySelectorAll('.stylist-card')[idx].classList.add('selected');
-  setButtonState('btn-next-2', true); setButtonState('btn-confirm', false); updateSummary();
+function selectStylist(name){
+  booking.stylist=name;booking.date=null;booking.dateKey=null;booking.time=null;
+  document.getElementById('time-section').style.display='none';
+  document.querySelectorAll('.stylist-card').forEach(el=>el.classList.remove('selected'));
+  const idx=['Laura Alonso','Marcos Soto','Carla García','Diego Reyes','Sin preferencia'].indexOf(name);
+  if(idx>=0)document.querySelectorAll('.stylist-card')[idx].classList.add('selected');
+  setButtonState('btn-next-2',true);setButtonState('btn-confirm',false);updateSummary();
 }
-function updateSummary() {
-  const set = (id, val, empty) => { const el = document.getElementById(id); el.textContent = val||empty; el.classList.toggle('empty', !val); };
-  set('bs-service', booking.service, 'No seleccionado');
-  set('bs-stylist', booking.stylist, 'No seleccionado');
-  set('bs-date',    booking.date,    'No seleccionada');
-  set('bs-time',    booking.time,    'No seleccionada');
-  set('bs-duration', booking.duration ? booking.duration+' min' : null, '—');
-  set('bs-price',    booking.price    ? booking.price+'€'       : null, '—');
+function updateSummary(){
+  const set=(id,val,empty)=>{const el=document.getElementById(id);el.textContent=val||empty;el.classList.toggle('empty',!val);};
+  set('bs-service',booking.service,'No seleccionado');set('bs-stylist',booking.stylist,'No seleccionado');
+  set('bs-date',booking.date,'No seleccionada');set('bs-time',booking.time,'No seleccionada');
+  set('bs-duration',booking.duration?booking.duration+' min':null,'—');
+  set('bs-price',booking.price?booking.price+'€':null,'—');
 }
-
-// ── CALENDAR ──────────────────────────────────────────────────────────────────
-const MONTHS_ES    = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
-const MONTHS_SHORT = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
-const DAYS_ES      = ['L','M','X','J','V','S','D'];
-function pad2(n) { return String(n).padStart(2,'0'); }
-
-function renderCalendar() {
-  document.getElementById('cal-month-label').textContent = MONTHS_ES[calMonth]+' '+calYear;
-  const grid = document.getElementById('cal-grid'); grid.innerHTML = '';
-  DAYS_ES.forEach(d => { const el = document.createElement('div'); el.className='cal-day-name'; el.textContent=d; grid.appendChild(el); });
-  const firstDay = new Date(calYear,calMonth,1).getDay();
-  const offset = (firstDay===0)?6:firstDay-1;
-  const daysInMonth = new Date(calYear,calMonth+1,0).getDate();
-  const today = new Date();
-  for (let i=0;i<offset;i++){const el=document.createElement('div');el.className='cal-day empty';grid.appendChild(el);}
-  for (let d=1;d<=daysInMonth;d++){
+const MONTHS_ES=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+const MONTHS_SHORT=['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+const DAYS_ES=['L','M','X','J','V','S','D'];
+function pad2(n){return String(n).padStart(2,'0');}
+function renderCalendar(){
+  document.getElementById('cal-month-label').textContent=MONTHS_ES[calMonth]+' '+calYear;
+  const grid=document.getElementById('cal-grid');grid.innerHTML='';
+  DAYS_ES.forEach(d=>{const el=document.createElement('div');el.className='cal-day-name';el.textContent=d;grid.appendChild(el);});
+  const firstDay=new Date(calYear,calMonth,1).getDay();
+  const offset=(firstDay===0)?6:firstDay-1;
+  const daysInMonth=new Date(calYear,calMonth+1,0).getDate();
+  const today=new Date();
+  for(let i=0;i<offset;i++){const el=document.createElement('div');el.className='cal-day empty';grid.appendChild(el);}
+  for(let d=1;d<=daysInMonth;d++){
     const el=document.createElement('div');el.className='cal-day';el.textContent=d;
     const thisDate=new Date(calYear,calMonth,d);
     const isPast=thisDate<new Date(today.getFullYear(),today.getMonth(),today.getDate());
@@ -651,72 +662,49 @@ function renderCalendar() {
   }
 }
 function selectDate(d,el){
-  document.querySelectorAll('.cal-day').forEach(e=>e.classList.remove('selected'));
-  el.classList.add('selected');
+  document.querySelectorAll('.cal-day').forEach(e=>e.classList.remove('selected'));el.classList.add('selected');
   booking.date=d+' '+MONTHS_SHORT[calMonth]+' '+calYear;
   booking.dateKey=calYear+'-'+pad2(calMonth+1)+'-'+pad2(d);
-  booking.time=null; updateSummary(); setButtonState('btn-confirm',false); showTimeSlots();
+  booking.time=null;updateSummary();setButtonState('btn-confirm',false);showTimeSlots();
 }
 async function showTimeSlots(){
-  const section=document.getElementById('time-section'); section.style.display='block';
+  const section=document.getElementById('time-section');section.style.display='block';
   const container=document.getElementById('time-slots');
   container.innerHTML='<div style="color:var(--gray);font-size:13px;padding:8px 0;grid-column:span 4;">Cargando horarios…</div>';
   const ALL_TIMES=['09:00','09:30','10:00','10:30','11:00','11:30','12:00','12:30','16:00','16:30','17:00','17:30','18:00','18:30','19:00','19:30'];
-
-  // Fetch bookings with time AND duration to calculate blocked slots
-  let query=db.from('bookings').select('time, duration').eq('date_key',booking.dateKey).eq('status','confirmed');
-  if(booking.stylist!=='Sin preferencia') query=query.eq('stylist',booking.stylist);
-  const {data}=await query;
-  const existingBookings = data || [];
-
-  // Convert "HH:MM" to minutes from midnight
-  function toMin(t) { const [h,m]=t.split(':').map(Number); return h*60+m; }
-
-  // A slot is blocked if it falls within the range [start, start+duration) of any booking
-  function isBlocked(slot) {
-    const slotMin = toMin(slot);
-    return existingBookings.some(b => {
-      const startMin = toMin(b.time);
-      const endMin   = startMin + (b.duration || 30);
-      return slotMin >= startMin && slotMin < endMin;
-    });
+  let query=db.from('bookings').select('time,duration').eq('date_key',booking.dateKey).eq('status','confirmed');
+  if(booking.stylist!=='Sin preferencia')query=query.eq('stylist',booking.stylist);
+  const {data:bookingsData}=await query;
+  const existingBookings=bookingsData||[];
+  // Fetch manual blocks
+  let blockQ=db.from('blocked_slots').select('time').eq('date_key',booking.dateKey);
+  if(booking.stylist!=='Sin preferencia')blockQ=blockQ.or(`stylist.eq.${booking.stylist},stylist.eq.todos`);
+  const {data:blocksData}=await blockQ;
+  const manualBlocks=(blocksData||[]).map(b=>b.time);
+  function toMin(t){const[h,m]=t.split(':').map(Number);return h*60+m;}
+  function isBlocked(slot){
+    const slotMin=toMin(slot);
+    return existingBookings.some(b=>{const s=toMin(b.time),e=s+(b.duration||30);return slotMin>=s&&slotMin<e;});
   }
-
-  // Also block slots where the NEW booking would overlap an existing one
-  // i.e. if I book at slotMin for duration D, any existing booking starting between [slotMin, slotMin+D) is a conflict
-  function wouldOverlap(slot) {
-    const slotMin = toMin(slot);
-    const newEnd  = slotMin + (booking.duration || 30);
-    return existingBookings.some(b => {
-      const existStart = toMin(b.time);
-      return existStart >= slotMin && existStart < newEnd;
-    });
+  function wouldOverlap(slot){
+    const slotMin=toMin(slot),newEnd=slotMin+(booking.duration||30);
+    return existingBookings.some(b=>{const es=toMin(b.time);return es>=slotMin&&es<newEnd;});
   }
-
-  // Block past times if the selected date is today
-  const todayKey = new Date().toISOString().slice(0,10);
-  const isToday  = booking.dateKey === todayKey;
-  const nowMin   = new Date().getHours()*60 + new Date().getMinutes();
-
-  function isPast(t) { return isToday && toMin(t) <= nowMin; }
-
+  const todayKey=new Date().toISOString().slice(0,10);
+  const isToday=booking.dateKey===todayKey;
+  const nowMin=new Date().getHours()*60+new Date().getMinutes();
+  function isPast(t){return isToday&&toMin(t)<=nowMin;}
+  function isManualBlock(t){return manualBlocks.includes(null)||manualBlocks.includes(t);}
   container.innerHTML='';
   ALL_TIMES.forEach(t=>{
     const el=document.createElement('div');
-    const unavailable = isPast(t) || isBlocked(t) || wouldOverlap(t);
-    el.className='time-slot'+(unavailable?' unavailable':'');
-    el.textContent=t;
-    if(unavailable){ el.title = isPast(t) ? 'Hora pasada' : 'Hora ocupada'; }
-    else {
-      el.onclick=()=>{
-        document.querySelectorAll('.time-slot').forEach(e=>e.classList.remove('selected'));
-        el.classList.add('selected');
-        booking.time=t; updateSummary(); setButtonState('btn-confirm',true);
-      };
-    }
+    const unavailable=isPast(t)||isBlocked(t)||wouldOverlap(t)||isManualBlock(t);
+    el.className='time-slot'+(unavailable?' unavailable':'');el.textContent=t;
+    if(unavailable){el.title=isPast(t)?'Hora pasada':isManualBlock(t)?'Horario no disponible':'Hora ocupada';}
+    else{el.onclick=()=>{document.querySelectorAll('.time-slot').forEach(e=>e.classList.remove('selected'));el.classList.add('selected');booking.time=t;updateSummary();setButtonState('btn-confirm',true);};}
     container.appendChild(el);
   });
-  const available = ALL_TIMES.filter(t => !isPast(t) && !isBlocked(t) && !wouldOverlap(t)).length;
+  const available=ALL_TIMES.filter(t=>!isPast(t)&&!isBlocked(t)&&!wouldOverlap(t)&&!isManualBlock(t)).length;
   const indicator=document.createElement('div');
   indicator.style.cssText='grid-column:span 4;font-size:11px;color:var(--gray);letter-spacing:0.06em;text-transform:uppercase;padding-top:8px;';
   indicator.textContent=available+' disponibles · '+(ALL_TIMES.length-available)+' ocupados';
@@ -724,121 +712,241 @@ async function showTimeSlots(){
 }
 function prevMonth(){calMonth--;if(calMonth<0){calMonth=11;calYear--;}booking.date=null;booking.dateKey=null;booking.time=null;updateSummary();document.getElementById('time-section').style.display='none';renderCalendar();}
 function nextMonth(){calMonth++;if(calMonth>11){calMonth=0;calYear++;}booking.date=null;booking.dateKey=null;booking.time=null;updateSummary();document.getElementById('time-section').style.display='none';renderCalendar();}
-
 async function confirmBooking(){
   if(!currentUser){showPage('auth');return;}
-  const btn=document.getElementById('btn-confirm');
-  btn.textContent='Guardando…';btn.disabled=true;
+  const btn=document.getElementById('btn-confirm');btn.textContent='Guardando…';btn.disabled=true;
   let checkQ=db.from('bookings').select('id').eq('date_key',booking.dateKey).eq('time',booking.time).eq('status','confirmed');
   if(booking.stylist!=='Sin preferencia')checkQ=checkQ.eq('stylist',booking.stylist);
-  const {data:conflict}=await checkQ;
-  if(conflict&&conflict.length>0){
-    btn.textContent='Confirmar reserva';btn.disabled=false;
-    alert('⚠️ Este horario acaba de ser reservado. Por favor elige otro.');
-    booking.time=null;updateSummary();setButtonState('btn-confirm',false);await showTimeSlots();return;
-  }
+  const{data:conflict}=await checkQ;
+  if(conflict&&conflict.length>0){btn.textContent='Confirmar reserva';btn.disabled=false;alert('⚠️ Este horario acaba de ser reservado. Por favor elige otro.');booking.time=null;updateSummary();setButtonState('btn-confirm',false);await showTimeSlots();return;}
   const stylistAssigned=booking.stylist==='Sin preferencia'?'Laura Alonso':booking.stylist;
-  const userName = currentUser.user_metadata?.full_name || currentUser.email;
-  const {error}=await db.from('bookings').insert({
-    user_id:currentUser.id, user_email:currentUser.email, user_name:userName,
-    stylist:stylistAssigned, service:booking.service, price:booking.price,
-    duration:booking.duration, date:booking.date, date_key:booking.dateKey,
-    time:booking.time, status:'confirmed'
-  });
+  const userName=currentUser.user_metadata?.full_name||currentUser.email;
+  const{error}=await db.from('bookings').insert({user_id:currentUser.id,user_email:currentUser.email,user_name:userName,stylist:stylistAssigned,service:booking.service,price:booking.price,duration:booking.duration,date:booking.date,date_key:booking.dateKey,time:booking.time,status:'confirmed'});
   if(error){alert('Error: '+error.message);btn.textContent='Confirmar reserva';btn.disabled=false;return;}
-
-  // Trigger confirmation email via Edge Function (if deployed)
-  try {
-    await fetch(`${window.SUPABASE_URL}/functions/v1/send-booking-email`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${window.SUPABASE_ANON_KEY}` },
-      body: JSON.stringify({
-        to: currentUser.email, name: userName,
-        service: booking.service, stylist: stylistAssigned,
-        date: booking.date, time: booking.time, price: booking.price
-      })
-    });
-  } catch(e) { /* Edge Function no desplegada aún, continuar sin email */ }
-
-  document.getElementById('cf-service').textContent=booking.service;
-  document.getElementById('cf-stylist').textContent=stylistAssigned;
-  document.getElementById('cf-date').textContent=booking.date;
-  document.getElementById('cf-time').textContent=booking.time;
+  try{await fetch(`${window.SUPABASE_URL}/functions/v1/send-booking-email`,{method:'POST',headers:{'Content-Type':'application/json','Authorization':`Bearer ${window.SUPABASE_ANON_KEY}`},body:JSON.stringify({to:currentUser.email,name:userName,service:booking.service,stylist:stylistAssigned,date:booking.date,time:booking.time,price:booking.price})});}catch(e){}
+  document.getElementById('cf-service').textContent=booking.service;document.getElementById('cf-stylist').textContent=stylistAssigned;
+  document.getElementById('cf-date').textContent=booking.date;document.getElementById('cf-time').textContent=booking.time;
   document.getElementById('cf-price').textContent=booking.price+'€';
-  document.getElementById('booking-flow').style.display='none';
-  document.getElementById('booking-confirmation').style.display='';
+  document.getElementById('booking-flow').style.display='none';document.getElementById('booking-confirmation').style.display='';
 }
 
 // ── MIS CITAS ─────────────────────────────────────────────────────────────────
 async function loadMyBookings(){
   if(!currentUser)return;
-  const tbody=document.getElementById('my-bookings-tbody');
-  tbody.innerHTML='<tr><td colspan="7" style="text-align:center;color:var(--gray);padding:32px;">Cargando…</td></tr>';
-  const {data}=await db.from('bookings').select('*').eq('user_id',currentUser.id).order('date_key',{ascending:false});
-  if(!data||data.length===0){
-    tbody.innerHTML='<tr><td colspan="7" style="text-align:center;color:var(--gray);padding:48px;font-style:italic;">No tienes citas reservadas aún</td></tr>';return;
-  }
-  tbody.innerHTML=data.map(b=>{
-    const canCancel = canCancelBooking(b);
-    const cancelBtn = b.status==='confirmed' && canCancel
-      ? `<button onclick="cancelBooking('${b.id}')" style="background:none;border:1px solid #fdd;color:#c04040;padding:6px 14px;font-size:11px;letter-spacing:0.06em;text-transform:uppercase;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:500;">Cancelar</button>`
-      : b.status==='confirmed'
-        ? `<span style="font-size:11px;color:var(--gray);">< 24h</span>`
-        : '';
-    const badge = b.status==='cancelled'
-      ? '<span class="badge badge-cancelled">Cancelada</span>'
-      : '<span class="badge badge-confirmed">Confirmada</span>';
-    return `<tr><td>${b.date}</td><td>${b.time}</td><td>${b.service}</td><td>${b.stylist}</td><td>${b.price}€</td><td>${badge}</td><td>${cancelBtn}</td></tr>`;
+  const container=document.getElementById('my-bookings-list');
+  container.innerHTML='<p style="color:var(--gray);text-align:center;padding:48px;font-style:italic;">Cargando…</p>';
+  const{data}=await db.from('bookings').select('*').eq('user_id',currentUser.id).order('date_key',{ascending:false});
+  if(!data||data.length===0){container.innerHTML='<p style="color:var(--gray);text-align:center;padding:48px;font-style:italic;">No tienes citas reservadas aún</p>';return;}
+  container.innerHTML=data.map(b=>{
+    const canCancel=canCancelBooking(b);
+    const cancelBtn=b.status==='confirmed'&&canCancel
+      ?`<button onclick="openCancelModal('${b.id}',false)" class="btn-cancel-small">Cancelar</button>`
+      :b.status==='confirmed'?`<span style="font-size:11px;color:var(--gray);">< 24h</span>`:'';
+    return `
+    <div class="booking-card ${b.status==='cancelled'?'booking-card-cancelled':''}">
+      <div class="booking-card-header">
+        <div>
+          <div class="booking-card-service">${b.service}</div>
+          <div class="booking-card-meta">con ${b.stylist} · ${b.duration} min</div>
+        </div>
+        <span class="badge badge-${b.status==='confirmed'?'confirmed':'cancelled'}">${b.status==='confirmed'?'Confirmada':'Cancelada'}</span>
+      </div>
+      <div class="booking-card-footer">
+        <div class="booking-card-datetime">📅 ${b.date} · ${b.time}</div>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div class="booking-card-price">${b.price}€</div>
+          ${cancelBtn}
+        </div>
+      </div>
+    </div>`;
   }).join('');
 }
-
-function canCancelBooking(b) {
-  // Allow cancel only if more than 24h before the appointment
-  const appointmentDate = new Date(`${b.date_key}T${b.time}:00`);
-  const now = new Date();
-  const diffHours = (appointmentDate - now) / (1000 * 60 * 60);
-  return diffHours > 24;
+function canCancelBooking(b){
+  if(b.status==='cancelled')return false;
+  const appointmentDate=new Date(`${b.date_key}T${b.time}:00`);
+  return (appointmentDate-new Date())/(1000*60*60)>24;
 }
 
-async function cancelBooking(id) {
-  if (!confirm('¿Seguro que quieres cancelar esta cita?')) return;
-  // Re-check 24h rule server-side via the date stored
-  const { data: booking } = await db.from('bookings').select('date_key,time,status').eq('id', id).single();
-  if (!booking || booking.status === 'cancelled') { alert('Esta cita ya está cancelada.'); return; }
-  if (!canCancelBooking(booking)) { alert('No puedes cancelar con menos de 24 horas de antelación.'); return; }
-
-  const { error } = await db.from('bookings').update({ status: 'cancelled' }).eq('id', id).eq('user_id', currentUser.id);
-  if (error) { alert('Error al cancelar: ' + error.message); return; }
-  loadMyBookings();
+// ── CANCEL MODAL ──────────────────────────────────────────────────────────────
+function openCancelModal(id, isAdmin) {
+  cancelTargetId=id; cancelIsAdmin=isAdmin;
+  const modal=document.getElementById('cancel-modal');
+  document.getElementById('cancel-modal-desc').textContent = isAdmin
+    ? '¿Seguro que quieres cancelar esta reserva? El cliente será notificado.'
+    : '¿Seguro que quieres cancelar esta cita?';
+  document.getElementById('cancel-reason-field').style.display = isAdmin ? '' : 'none';
+  modal.style.display='flex';
+}
+function closeCancelModal(){
+  document.getElementById('cancel-modal').style.display='none';
+  cancelTargetId=null; cancelIsAdmin=false;
+  document.getElementById('cancel-reason-input').value='';
+}
+async function executeCancelBooking(){
+  if(!cancelTargetId)return;
+  const reason=document.getElementById('cancel-reason-input').value.trim();
+  const{error}=await db.from('bookings').update({status:'cancelled',cancelled_by:cancelIsAdmin?'admin':'client',cancel_reason:reason||null}).eq('id',cancelTargetId);
+  if(error){alert('Error al cancelar: '+error.message);return;}
+  closeCancelModal();
+  if(cancelIsAdmin)loadAdminBookings();
+  else loadMyBookings();
 }
 
 // ── ADMIN ─────────────────────────────────────────────────────────────────────
-function showAdminSection(id,el){
+function switchAdminTab(id, el) {
   document.querySelectorAll('.admin-section').forEach(s=>s.classList.remove('active'));
   document.getElementById('admin-'+id).classList.add('active');
   document.querySelectorAll('.admin-nav-item').forEach(n=>n.classList.remove('active'));
   el.classList.add('active');
+  if(id==='citas')    loadAdminBookings();
+  if(id==='bloqueos') loadAdminBlocks();
+  if(id==='clientes') loadAdminClients();
 }
-async function loadAdminData(){
-  const today=new Date().toISOString().slice(0,10);
+
+async function loadAdminDashboard(){
   document.getElementById('admin-date-label').textContent=new Date().toLocaleDateString('es-ES',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
-  const {data:all}=await db.from('bookings').select('*').order('date_key',{ascending:false});
+  const{data:all}=await db.from('bookings').select('*').order('date_key',{ascending:false});
   const bookings=all||[];
+  const today=new Date().toISOString().slice(0,10);
+  const weekStart=new Date(); weekStart.setDate(weekStart.getDate()-weekStart.getDay()+1);
+  const weekKey=weekStart.toISOString().slice(0,10);
   const todayOnes=bookings.filter(b=>b.date_key===today&&b.status==='confirmed');
+  const weekOnes=bookings.filter(b=>b.date_key>=weekKey&&b.status==='confirmed');
+  const monthStart=today.slice(0,7)+'-01';
+  const monthIncome=bookings.filter(b=>b.date_key>=monthStart&&b.status==='confirmed').reduce((s,b)=>s+(b.price||0),0);
   document.getElementById('stat-today').textContent=todayOnes.length;
-  document.getElementById('stat-income').textContent=bookings.filter(b=>b.status==='confirmed').reduce((s,b)=>s+(b.price||0),0)+'€';
+  document.getElementById('stat-week').textContent=weekOnes.length;
+  document.getElementById('stat-income').textContent=monthIncome+'€';
   document.getElementById('stat-total').textContent=bookings.filter(b=>b.status==='confirmed').length;
-  const emptyRow=(cols,msg)=>`<tr><td colspan="${cols}" style="text-align:center;color:var(--gray);padding:32px;font-style:italic;">${msg}</td></tr>`;
-  document.getElementById('admin-today-tbody').innerHTML=todayOnes.length===0?emptyRow(6,'No hay citas para hoy'):
-    todayOnes.map(b=>`<tr><td>${b.time}</td><td>${b.user_name||b.user_email}</td><td>${b.service}</td><td>${b.stylist}</td><td>${b.price}€</td><td><span class="badge badge-confirmed">Confirmada</span></td></tr>`).join('');
-  document.getElementById('admin-all-tbody').innerHTML=bookings.length===0?emptyRow(7,'No hay reservas aún'):
-    bookings.map(b=>`<tr><td>${b.date}</td><td>${b.time}</td><td>${b.user_name||b.user_email}</td><td>${b.service}</td><td>${b.stylist}</td><td>${b.price}€</td><td><span class="badge badge-${b.status==='confirmed'?'confirmed':'cancelled'}">${b.status==='confirmed'?'Confirmada':'Cancelada'}</span></td></tr>`).join('');
+
+  // Stylist filter buttons
+  const stylists=['Todos','Laura Alonso','Marcos Soto','Carla García','Diego Reyes'];
+  document.getElementById('admin-today-filter').innerHTML=stylists.map(s=>`
+    <button onclick="renderTodayAgenda(${JSON.stringify(todayOnes)},'${s}')"
+      style="padding:6px 14px;font-size:11px;letter-spacing:0.06em;text-transform:uppercase;border:1px solid var(--light-gray);background:var(--white);cursor:pointer;font-family:'DM Sans',sans-serif;">${s}</button>
+  `).join('');
+  renderTodayAgenda(todayOnes,'Todos');
+}
+
+function renderTodayAgenda(bookings, stylistFilter) {
+  const filtered = stylistFilter==='Todos' ? bookings : bookings.filter(b=>b.stylist===stylistFilter);
+  const container = document.getElementById('admin-today-list');
+  if(filtered.length===0){container.innerHTML='<p style="padding:24px;color:var(--gray);font-style:italic;font-size:14px;">No hay citas para hoy'+(stylistFilter!=='Todos'?' con '+stylistFilter:'')+'.</p>';return;}
+  filtered.sort((a,b)=>a.time.localeCompare(b.time));
+  container.innerHTML=filtered.map(b=>`
+    <div class="admin-booking-row">
+      <div class="admin-booking-time">${b.time}</div>
+      <div class="admin-booking-info">
+        <div class="admin-booking-service">${b.service}</div>
+        <div class="admin-booking-client">${b.user_name||b.user_email} · ${b.stylist}</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;">
+        <div class="admin-booking-price">${b.price}€</div>
+        <button onclick="openCancelModal('${b.id}',true)" class="btn-cancel-small">Cancelar</button>
+      </div>
+    </div>`).join('');
+}
+
+async function loadAdminBookings(){
+  const container=document.getElementById('admin-bookings-list');
+  container.innerHTML='<p style="padding:24px;color:var(--gray);">Cargando…</p>';
+  let query=db.from('bookings').select('*').order('date_key',{ascending:false}).order('time',{ascending:true});
+  const dateFilter=document.getElementById('filter-date')?.value;
+  const stylistFilter=document.getElementById('filter-stylist')?.value;
+  const statusFilter=document.getElementById('filter-status')?.value;
+  if(dateFilter)    query=query.eq('date_key',dateFilter);
+  if(stylistFilter) query=query.eq('stylist',stylistFilter);
+  if(statusFilter)  query=query.eq('status',statusFilter);
+  const{data}=await query;
+  const bookings=data||[];
+  if(bookings.length===0){container.innerHTML='<p style="padding:24px;color:var(--gray);font-style:italic;">No hay reservas con estos filtros.</p>';return;}
+  container.innerHTML=bookings.map(b=>`
+    <div class="admin-booking-row ${b.status==='cancelled'?'admin-booking-cancelled':''}">
+      <div class="admin-booking-time">${b.date}<br><span style="font-weight:700;">${b.time}</span></div>
+      <div class="admin-booking-info">
+        <div class="admin-booking-service">${b.service}</div>
+        <div class="admin-booking-client">${b.user_name||b.user_email} · ${b.stylist}</div>
+        ${b.cancel_reason?`<div style="font-size:11px;color:#c04040;margin-top:2px;">Motivo: ${b.cancel_reason}</div>`:''}
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;">
+        <span class="badge badge-${b.status==='confirmed'?'confirmed':'cancelled'}">${b.status==='confirmed'?'Confirmada':'Cancelada'}</span>
+        <div class="admin-booking-price">${b.price}€</div>
+        ${b.status==='confirmed'?`<button onclick="openCancelModal('${b.id}',true)" class="btn-cancel-small">Cancelar</button>`:''}
+      </div>
+    </div>`).join('');
+}
+
+function clearAdminFilters(){
+  document.getElementById('filter-date').value='';
+  document.getElementById('filter-stylist').value='';
+  document.getElementById('filter-status').value='';
+  loadAdminBookings();
+}
+
+async function loadAdminBlocks(){
+  const{data}=await db.from('blocked_slots').select('*').order('date_key',{ascending:true});
+  const blocks=data||[];
+  const container=document.getElementById('admin-blocks-list');
+  if(blocks.length===0){container.innerHTML='<p style="padding:24px;color:var(--gray);font-style:italic;">No hay bloqueos activos.</p>';return;}
+  container.innerHTML=blocks.map(b=>`
+    <div class="admin-booking-row">
+      <div class="admin-booking-time">${b.date_key}<br><span style="font-weight:700;">${b.time||'Día completo'}</span></div>
+      <div class="admin-booking-info">
+        <div class="admin-booking-service">${b.stylist==='todos'?'Todos los estilistas':b.stylist}</div>
+        <div class="admin-booking-client">${b.reason||'Sin motivo especificado'}</div>
+      </div>
+      <button onclick="deleteBlock('${b.id}')" style="padding:6px 14px;font-size:11px;letter-spacing:0.06em;text-transform:uppercase;border:1px solid #fdd;color:#c04040;background:none;cursor:pointer;font-family:'DM Sans',sans-serif;">Eliminar</button>
+    </div>`).join('');
+}
+
+async function addBlock(){
+  const stylist=document.getElementById('block-stylist').value;
+  const dateKey=document.getElementById('block-date').value;
+  const time=document.getElementById('block-time').value||null;
+  const reason=document.getElementById('block-reason').value.trim()||null;
+  if(!dateKey){document.getElementById('block-msg').textContent='Elige una fecha.';return;}
+  const{error}=await db.from('blocked_slots').insert({stylist,date_key:dateKey,time,reason,created_by:currentUser.id});
+  if(error){document.getElementById('block-msg').textContent='Error: '+error.message;return;}
+  document.getElementById('block-msg').textContent='✓ Bloqueo añadido.';
+  document.getElementById('block-date').value='';document.getElementById('block-reason').value='';
+  setTimeout(()=>{document.getElementById('block-msg').textContent='';},3000);
+  loadAdminBlocks();
+}
+
+async function deleteBlock(id){
+  if(!confirm('¿Eliminar este bloqueo?'))return;
+  await db.from('blocked_slots').delete().eq('id',id);
+  loadAdminBlocks();
+}
+
+async function loadAdminClients(){
+  const{data}=await db.from('bookings').select('user_id,user_name,user_email,price,status').eq('status','confirmed');
+  const container=document.getElementById('admin-clients-list');
+  if(!data||data.length===0){container.innerHTML='<p style="padding:24px;color:var(--gray);font-style:italic;">No hay clientes aún.</p>';return;}
+  // Group by user
+  const clients={};
+  data.forEach(b=>{
+    if(!clients[b.user_id])clients[b.user_id]={name:b.user_name,email:b.user_email,bookings:0,spent:0};
+    clients[b.user_id].bookings++;
+    clients[b.user_id].spent+=(b.price||0);
+  });
+  const sorted=Object.values(clients).sort((a,b)=>b.spent-a.spent);
+  container.innerHTML=sorted.map(c=>`
+    <div class="admin-booking-row">
+      <div style="width:40px;height:40px;background:var(--black);color:var(--white);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:16px;font-weight:700;flex-shrink:0;">${(c.name||c.email)[0].toUpperCase()}</div>
+      <div class="admin-booking-info">
+        <div class="admin-booking-service">${c.name||'—'}</div>
+        <div class="admin-booking-client">${c.email}</div>
+      </div>
+      <div style="text-align:right;">
+        <div style="font-weight:700;font-size:15px;">${c.spent}€</div>
+        <div style="font-size:12px;color:var(--gray);">${c.bookings} citas</div>
+      </div>
+    </div>`).join('');
 }
 
 // ── INIT ──────────────────────────────────────────────────────────────────────
-const _now = new Date();
-calYear = _now.getFullYear(); calMonth = _now.getMonth();
-renderCalendar();
+const _now=new Date();calYear=_now.getFullYear();calMonth=_now.getMonth();renderCalendar();
 </script>
 </body>
 </html>
