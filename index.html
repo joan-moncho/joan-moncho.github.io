@@ -27,14 +27,14 @@
     <div id="nav-user" style="display:none">
       <div class="nav-user-menu">
         <div class="nav-avatar" id="nav-avatar" onclick="toggleUserMenu()">U</div>
-        <div class="nav-user-dropdown" id="nav-user-dropdown">
+        <div class="nav-user-dropdown" id="nav-user-dropdown" onclick="event.stopPropagation()">
           <div class="nav-user-name" id="nav-user-name">Usuario</div>
           <div class="nav-user-email" id="nav-user-email"></div>
           <div class="nav-dropdown-divider"></div>
-          <div class="nav-dropdown-item" onclick="showPage('profile')">👤 Mi perfil</div>
-          <div class="nav-dropdown-item" onclick="showPage('my-bookings')">📅 Mis citas</div>
+          <div class="nav-dropdown-item" onclick="closeUserMenu(); showPage('profile')">👤 Mi perfil</div>
+          <div class="nav-dropdown-item" onclick="closeUserMenu(); showPage('my-bookings')">📅 Mis citas</div>
           <div class="nav-dropdown-divider"></div>
-          <div class="nav-dropdown-item" onclick="logout()">Cerrar sesión</div>
+          <div class="nav-dropdown-item" onclick="closeUserMenu(); logout()">Cerrar sesión</div>
         </div>
       </div>
       <button class="nav-cta" onclick="handleReservarClick()">Reservar cita</button>
@@ -389,13 +389,10 @@ function toggleUserMenu(e) {
   e.stopPropagation();
   document.getElementById('nav-user-dropdown').classList.toggle('open');
 }
-
-document.addEventListener('click', (e) => {
-  const menu = document.querySelector('.nav-user-menu');
-  if (menu && !menu.contains(e.target)) {
-    document.getElementById('nav-user-dropdown')?.classList.remove('open');
-  }
-});
+function closeUserMenu() {
+  document.getElementById('nav-user-dropdown').classList.remove('open');
+}
+document.addEventListener('click', () => closeUserMenu());
 
 // ── AUTH STATE ────────────────────────────────────────────────────────────────
 let currentUser = null;
