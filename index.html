@@ -165,11 +165,13 @@
       </div>
     </div>
 
-    <!-- Danger zone -->
-    <div class="profile-section" style="border-color:#fee;">
-      <div class="profile-section-title" style="color:#c04040;">Zona de peligro</div>
-      <p style="font-size:14px;color:var(--gray);margin-bottom:20px;">Cerrar sesión en todos los dispositivos.</p>
-      <button class="btn-ghost" style="border-color:#fdd;color:#c04040;" onclick="logout()">Cerrar sesión</button>
+    <!-- Logout -->
+    <div class="profile-section" style="display:flex;justify-content:space-between;align-items:center;">
+      <div>
+        <div style="font-weight:600;font-size:14px;">Cerrar sesión</div>
+        <div style="font-size:13px;color:var(--gray);margin-top:4px;">Salir de tu cuenta en este dispositivo</div>
+      </div>
+      <button class="btn-ghost" onclick="logout()" style="white-space:nowrap;">Cerrar sesión</button>
     </div>
 
   </div>
@@ -383,9 +385,9 @@ const db = window.supabase.createClient(window.SUPABASE_URL, window.SUPABASE_ANO
 const ADMIN_EMAILS = ['joan.moncho.vinaroz@gmail.com'];
 
 // ── USER MENU TOGGLE ─────────────────────────────────────────────────────────
-function toggleUserMenu() {
-  const dropdown = document.getElementById('nav-user-dropdown');
-  const isOpen = dropdown.classList.toggle('open');
+function toggleUserMenu(e) {
+  e.stopPropagation();
+  document.getElementById('nav-user-dropdown').classList.toggle('open');
 }
 
 document.addEventListener('click', (e) => {

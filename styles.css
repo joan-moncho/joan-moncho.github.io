@@ -922,14 +922,14 @@ tr:hover td { background: #fafaf8; }
 }
 .upcoming-booking-card:last-child { border-bottom: none; }
 
-/* ── RESPONSIVE ─────────────────────────────────────────────────────────────── */
+/* ── RESPONSIVE / MOBILE FIRST ──────────────────────────────────────────────── */
 @media (max-width: 1024px) {
   nav { padding: 20px 24px; }
   .nav-links { display: none; }
   .hero { grid-template-columns: 1fr; min-height: auto; }
   .hero-right { display: none; }
   .hero-left { padding: 60px 24px; }
-  .section { padding: 60px 24px; }
+  .section { padding: 40px 20px; }
   .services-grid { grid-template-columns: 1fr; }
   .team-grid { grid-template-columns: repeat(2, 1fr); }
   .booking-layout { grid-template-columns: 1fr; }
@@ -937,4 +937,88 @@ tr:hover td { background: #fafaf8; }
   .admin-layout { grid-template-columns: 1fr; }
   .admin-sidebar { display: none; }
   .stats-row { grid-template-columns: repeat(2, 1fr); }
+  .profile-stats { grid-template-columns: repeat(3,1fr); }
+  .profile-field-row { flex-direction: column; }
+  .profile-field-row .btn-primary { width: 100%; }
+}
+
+@media (max-width: 600px) {
+  /* Nav */
+  nav { padding: 16px 20px; }
+  .logo { font-size: 18px; }
+  .nav-cta { padding: 10px 18px; font-size: 12px; }
+  .nav-avatar { width: 32px; height: 32px; font-size: 13px; }
+  .nav-user-dropdown { right: -16px; min-width: 180px; }
+
+  /* Hero */
+  .hero-left { padding: 48px 20px; }
+  .hero-title { font-size: 40px; }
+  .hero-desc { font-size: 14px; }
+  .hero-btns { flex-direction: column; gap: 12px; }
+  .btn-primary, .btn-ghost { width: 100%; text-align: center; padding: 16px 24px; }
+
+  /* Sections */
+  .section { padding: 32px 16px; }
+  .section-header { flex-direction: column; align-items: flex-start; gap: 8px; margin-bottom: 32px; }
+  .section-title { font-size: 28px; }
+
+  /* Services */
+  .services-grid { grid-template-columns: 1fr; gap: 1px; }
+  .service-card { padding: 28px 20px; }
+
+  /* Team */
+  .team-grid { grid-template-columns: 1fr 1fr; gap: 16px; }
+
+  /* Auth */
+  .auth-box { padding: 32px 24px; border: none; }
+  .auth-wrap { padding: 20px 0; align-items: flex-start; background: var(--white); }
+
+  /* Booking */
+  .booking-steps { gap: 0; overflow-x: auto; }
+  .step { padding: 14px 16px 14px 0; font-size: 11px; white-space: nowrap; }
+  .stylist-select-grid { grid-template-columns: 1fr; }
+  .time-slots { grid-template-columns: repeat(3, 1fr); gap: 6px; }
+  .booking-summary { padding: 24px 16px; }
+  .bs-title { font-size: 17px; }
+
+  /* Calendar */
+  .cal-day { font-size: 13px; }
+  .cal-day-name { font-size: 10px; padding: 8px 4px; }
+
+  /* Tables → card layout on mobile */
+  .admin-table-wrap { overflow-x: auto; }
+  table { min-width: 540px; }
+
+  /* Confirmation */
+  .confirmation { padding: 48px 20px; }
+  .confirm-title { font-size: 28px; }
+  .confirm-details { padding: 20px; }
+
+  /* Profile */
+  .profile-hero { padding: 28px 20px; gap: 20px; flex-wrap: wrap; }
+  .profile-avatar-big { width: 64px; height: 64px; font-size: 28px; }
+  .profile-name { font-size: 22px; }
+  .profile-stats { grid-template-columns: repeat(3,1fr); }
+  .profile-stat { padding: 20px 12px; }
+  .profile-stat-num { font-size: 26px; }
+  .profile-section { padding: 24px 20px; }
+  .upcoming-booking-card { flex-direction: column; align-items: flex-start; gap: 8px; }
+
+  /* Stats admin */
+  .stats-row { grid-template-columns: 1fr 1fr; gap: 12px; }
+  .stat-card { padding: 20px 16px; }
+  .stat-card-value { font-size: 28px; }
+
+  /* Service select items */
+  .service-select-item { padding: 18px 16px; }
+  .ssi-name { font-size: 16px; }
+  .ssi-price { font-size: 18px; }
+
+  /* Step nav */
+  .step-nav { flex-direction: column; gap: 10px; }
+  .step-nav .btn-primary,
+  .step-nav .btn-ghost { width: 100%; text-align: center; }
+
+  /* My bookings cancel button */
+  table .btn-ghost { padding: 6px 10px; font-size: 10px; }
 }
