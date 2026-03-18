@@ -858,6 +858,63 @@ tr:hover td { background: #fafaf8; }
 .auth-footer { text-align: center; margin-top: 20px; font-size: 13px; color: var(--gray); }
 .auth-footer a { color: var(--black); text-decoration: underline; cursor: pointer; font-weight: 500; }
 
+/* ── ADMIN PANEL ─────────────────────────────────────────────────────────────── */
+.admin-wrap { display: grid; grid-template-columns: 220px 1fr; min-height: calc(100vh - 73px); }
+
+.admin-sidebar { background: var(--black); padding: 32px 20px; color: var(--white); display: flex; flex-direction: column; }
+
+.admin-sidebar-logo { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; letter-spacing: 0.08em; margin-bottom: 4px; }
+.admin-sidebar-logo span { font-style: italic; font-weight: 400; }
+.admin-sidebar-subtitle { font-size: 11px; color: rgba(255,255,255,0.4); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 32px; }
+
+.admin-nav { display: flex; flex-direction: column; gap: 2px; flex: 1; }
+.admin-nav-item { display: flex; align-items: center; gap: 10px; padding: 12px 14px; font-size: 13px; cursor: pointer; color: rgba(255,255,255,0.6); border-radius: 2px; transition: all 0.15s; font-weight: 400; }
+.admin-nav-item:hover  { background: rgba(255,255,255,0.08); color: var(--white); }
+.admin-nav-item.active { background: rgba(255,255,255,0.14); color: var(--white); }
+.admin-nav-icon { width: 16px; text-align: center; font-size: 12px; }
+
+.admin-sidebar-back { margin-top: 24px; padding: 12px 14px; font-size: 12px; color: rgba(255,255,255,0.4); cursor: pointer; transition: color 0.15s; }
+.admin-sidebar-back:hover { color: rgba(255,255,255,0.8); }
+
+.admin-content { padding: 40px 32px; background: #f8f8f4; overflow-y: auto; }
+.admin-header { margin-bottom: 32px; }
+.admin-title  { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700; margin-bottom: 4px; }
+.admin-subtitle { font-size: 13px; color: var(--gray); font-weight: 300; }
+
+.admin-section { display: none; }
+.admin-section.active { display: block; animation: fadeIn 0.2s ease; }
+
+.admin-card { background: var(--white); border: 1px solid var(--light-gray); overflow: hidden; margin-bottom: 24px; }
+.admin-card-header { padding: 18px 24px; border-bottom: 1px solid var(--light-gray); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+.admin-card-title { font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 700; }
+
+.admin-filters { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; align-items: center; }
+.admin-filter-input { padding: 10px 14px; border: 1px solid var(--light-gray); font-family: 'DM Sans', sans-serif; font-size: 13px; background: var(--white); color: var(--black); outline: none; transition: border-color 0.2s; }
+.admin-filter-input:focus { border-color: var(--black); }
+
+.admin-booking-row { display: flex; align-items: center; gap: 16px; padding: 16px 24px; border-bottom: 1px solid #f0f0eb; background: var(--white); }
+.admin-booking-row:last-child { border-bottom: none; }
+.admin-booking-row:hover { background: #fafaf8; }
+.admin-booking-cancelled { opacity: 0.5; }
+.admin-booking-time    { font-size: 13px; color: var(--gray); min-width: 72px; line-height: 1.4; }
+.admin-booking-info    { flex: 1; min-width: 0; }
+.admin-booking-service { font-weight: 600; font-size: 14px; }
+.admin-booking-client  { font-size: 12px; color: var(--gray); margin-top: 2px; }
+.admin-booking-price   { font-family: 'Playfair Display', serif; font-size: 16px; font-weight: 700; white-space: nowrap; }
+
+/* ── BOOKING CARDS ──────────────────────────────────────────────────────────── */
+.booking-card { background: var(--white); border: 1px solid var(--light-gray); padding: 20px 24px; margin-bottom: 12px; }
+.booking-card-cancelled { opacity: 0.55; }
+.booking-card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; }
+.booking-card-service  { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; }
+.booking-card-meta     { font-size: 13px; color: var(--gray); margin-top: 4px; }
+.booking-card-footer   { display: flex; justify-content: space-between; align-items: center; }
+.booking-card-datetime { font-size: 13px; font-weight: 500; }
+.booking-card-price    { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; }
+
+.btn-cancel-small { padding: 6px 14px; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; border: 1px solid #fdd; color: #c04040; background: none; cursor: pointer; font-family: 'DM Sans', sans-serif; font-weight: 500; white-space: nowrap; }
+.btn-cancel-small:hover { background: #fff0f0; }
+
 /* ── PROFILE PAGE ───────────────────────────────────────────────────────────── */
 .profile-hero {
   display: flex;
@@ -1005,6 +1062,13 @@ tr:hover td { background: #fafaf8; }
   .upcoming-booking-card { flex-direction: column; align-items: flex-start; gap: 8px; }
 
   /* Stats admin */
+  .admin-wrap { grid-template-columns: 1fr; }
+  .admin-sidebar { display: none; }
+  .admin-content { padding: 24px 16px; }
+  .admin-filters { flex-direction: column; }
+  .admin-filter-input { width: 100%; }
+  .admin-booking-row { flex-wrap: wrap; gap: 10px; padding: 14px 16px; }
+  .booking-card { padding: 16px; }
   .stats-row { grid-template-columns: 1fr 1fr; gap: 12px; }
   .stat-card { padding: 20px 16px; }
   .stat-card-value { font-size: 28px; }
