@@ -440,8 +440,7 @@ const db = window.supabase.createClient(window.SUPABASE_URL, window.SUPABASE_ANO
   auth: {
     persistSession: true,
     autoRefreshToken: true,
-    detectSessionInUrl: true,
-    storageKey: 'punto-zero-auth'
+    detectSessionInUrl: true
   }
 });
 
@@ -506,6 +505,7 @@ function hideAuthError()    { document.getElementById('auth-error').style.displa
 async function loginWithGoogle() {
   hideAuthError();
   const { error } = await db.auth.signInWithOAuth({ provider:'google', options:{ redirectTo: window.location.href } });
+  console.log('Google OAuth error:', error);
   if (error) showAuthError(error.message);
 }
 async function loginWithEmail() {
@@ -513,8 +513,9 @@ async function loginWithEmail() {
   const email = document.getElementById('login-email').value.trim();
   const password = document.getElementById('login-password').value;
   if (!email||!password) return showAuthError('Rellena todos los campos.');
-  const { error } = await db.auth.signInWithPassword({ email, password });
-  if (error) showAuthError('Email o contraseña incorrectos.');
+  const { data, error } = await db.auth.signInWithPassword({ email, password });
+  console.log('Email login result:', data, error);
+  if (error) showAuthError('Error: ' + error.message);
 }
 async function registerWithEmail() {
   hideAuthError();
