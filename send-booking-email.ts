@@ -13,7 +13,7 @@
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts'
 
 const RESEND_API_KEY = Deno.env.get('RESEND_API_KEY')!
-const FROM_EMAIL     = 'Punto Zero <citas@puntozero.es>' // ← tu email verificado en Resend
+const FROM_EMAIL     = 'Punto Zero <joanmonvi@gmail.com>' // ← tu email verificado en Resend
 
 serve(async (req) => {
   // CORS for GitHub Pages
