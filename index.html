@@ -681,48 +681,37 @@ async function showTimeSlots(){
   const container=document.getElementById('time-slots');
   container.innerHTML='<div style="color:var(--gray);font-size:13px;padding:8px 0;grid-column:span 4;">Cargando horarios…</div>';
   const ALL_TIMES=['09:00','09:30','10:00','10:30','11:00','11:30','12:00','12:30','16:00','16:30','17:00','17:30','18:00','18:30','19:00','19:30'];
-  let query=db.from('bookings').select('time,duration').eq('date_key',booking.dateKey).eq('status','confirmed');
-  if(booking.stylist!=='Sin preferencia')query=query.eq('stylist',booking.stylist);
-  const {data:bookingsData}=await query;
-  const existingBookings=bookingsData||[];
-  // Fetch manual blocks — only if table exists, ignore errors
-  let manualBlocks = [];
-  try {
-    let blockQ = db.from('blocked_slots').select('time').eq('date_key', booking.dateKey);
-    if (booking.stylist !== 'Sin preferencia') {
-      blockQ = blockQ.or(`stylist.eq.${booking.stylist},stylist.eq.todos`);
-    }
-    const { data: blocksData } = await blockQ;
-    manualBlocks = (blocksData || []).map(b => b.time);
-  } catch(e) { /* tabla vacía o no existe, continuar sin bloqueos */ }
   function toMin(t){const[h,m]=t.split(':').map(Number);return h*60+m;}
-  function isBlocked(slot){
-    const slotMin=toMin(slot);
-    return existingBookings.some(b=>{const s=toMin(b.time),e=s+(b.duration||30);return slotMin>=s&&slotMin<e;});
+  try {
+    let query=db.from('bookings').select('time,duration').eq('date_key',booking.dateKey).eq('status','confirmed');
+    if(booking.stylist!=='Sin preferencia')query=query.eq('stylist',booking.stylist);
+    const {data,error}=await query;
+    if(error) throw error;
+    const existing=data||[];
+    const todayKey=new Date().toISOString().slice(0,10);
+    const isToday=booking.dateKey===todayKey;
+    const nowMin=new Date().getHours()*60+new Date().getMinutes();
+    function isPast(t){return isToday&&toMin(t)<=nowMin;}
+    function isBlocked(t){const m=toMin(t);return existing.some(b=>{const s=toMin(b.time),e=s+(b.duration||30);return m>=s&&m<e;});}
+    function wouldOverlap(t){const m=toMin(t),end=m+(booking.duration||30);return existing.some(b=>{const s=toMin(b.time);return s>=m&&s<end;});}
+    container.innerHTML='';
+    ALL_TIMES.forEach(t=>{
+      const el=document.createElement('div');
+      const unavailable=isPast(t)||isBlocked(t)||wouldOverlap(t);
+      el.className='time-slot'+(unavailable?' unavailable':'');el.textContent=t;
+      if(unavailable){el.title=isPast(t)?'Hora pasada':'Hora ocupada';}
+      else{el.onclick=()=>{document.querySelectorAll('.time-slot').forEach(e=>e.classList.remove('selected'));el.classList.add('selected');booking.time=t;updateSummary();setButtonState('btn-confirm',true);};}
+      container.appendChild(el);
+    });
+    const available=ALL_TIMES.filter(t=>!isPast(t)&&!isBlocked(t)&&!wouldOverlap(t)).length;
+    const indicator=document.createElement('div');
+    indicator.style.cssText='grid-column:span 4;font-size:11px;color:var(--gray);letter-spacing:0.06em;text-transform:uppercase;padding-top:8px;';
+    indicator.textContent=available+' disponibles · '+(ALL_TIMES.length-available)+' ocupados';
+    container.appendChild(indicator);
+  } catch(e) {
+    container.innerHTML='<div style="color:#c04040;font-size:13px;padding:8px 0;grid-column:span 4;">Error al cargar horarios. Recarga la página.</div>';
+    console.error('showTimeSlots error:', e);
   }
-  function wouldOverlap(slot){
-    const slotMin=toMin(slot),newEnd=slotMin+(booking.duration||30);
-    return existingBookings.some(b=>{const es=toMin(b.time);return es>=slotMin&&es<newEnd;});
-  }
-  const todayKey=new Date().toISOString().slice(0,10);
-  const isToday=booking.dateKey===todayKey;
-  const nowMin=new Date().getHours()*60+new Date().getMinutes();
-  function isPast(t){return isToday&&toMin(t)<=nowMin;}
-  function isManualBlock(t){return manualBlocks.includes(null)||manualBlocks.includes(t);}
-  container.innerHTML='';
-  ALL_TIMES.forEach(t=>{
-    const el=document.createElement('div');
-    const unavailable=isPast(t)||isBlocked(t)||wouldOverlap(t)||isManualBlock(t);
-    el.className='time-slot'+(unavailable?' unavailable':'');el.textContent=t;
-    if(unavailable){el.title=isPast(t)?'Hora pasada':isManualBlock(t)?'Horario no disponible':'Hora ocupada';}
-    else{el.onclick=()=>{document.querySelectorAll('.time-slot').forEach(e=>e.classList.remove('selected'));el.classList.add('selected');booking.time=t;updateSummary();setButtonState('btn-confirm',true);};}
-    container.appendChild(el);
-  });
-  const available=ALL_TIMES.filter(t=>!isPast(t)&&!isBlocked(t)&&!wouldOverlap(t)&&!isManualBlock(t)).length;
-  const indicator=document.createElement('div');
-  indicator.style.cssText='grid-column:span 4;font-size:11px;color:var(--gray);letter-spacing:0.06em;text-transform:uppercase;padding-top:8px;';
-  indicator.textContent=available+' disponibles · '+(ALL_TIMES.length-available)+' ocupados';
-  container.appendChild(indicator);
 }
 function prevMonth(){calMonth--;if(calMonth<0){calMonth=11;calYear--;}booking.date=null;booking.dateKey=null;booking.time=null;updateSummary();document.getElementById('time-section').style.display='none';renderCalendar();}
 function nextMonth(){calMonth++;if(calMonth>11){calMonth=0;calYear++;}booking.date=null;booking.dateKey=null;booking.time=null;updateSummary();document.getElementById('time-section').style.display='none';renderCalendar();}
