@@ -1,6 +1,6 @@
 // ─────────────────────────────────────────────────────────────────────────────
 // CONFIGURACIÓN DE SUPABASE — Punto Zero
-// Sigue las instrucciones en SETUP.md para obtener estos valores
+// Sustituye los valores con los de tu proyecto en Supabase → Settings → API
 // ─────────────────────────────────────────────────────────────────────────────
 
 window.SUPABASE_URL      = 'https://onyifqpklxjddddxpttr.supabase.co';
